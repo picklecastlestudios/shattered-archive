@@ -1,0 +1,372 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "connector-keep",
+  "zoneName": "Connector Keep",
+  "discipline": "Connectors & MCP",
+  "bossName": "The Silo Warden",
+  "misconception": "Your tools and data live in silos — Claude can never reach them.",
+  "sources": [
+    "https://modelcontextprotocol.io/docs/getting-started/intro",
+    "https://modelcontextprotocol.io/docs/learn/architecture",
+    "https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp",
+    "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities",
+    "https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "mcp-what",
+      "npc": "Bridgekeeper Isolde",
+      "line": "MCP — the Model Context Protocol — is an open standard for connecting AI applications to external systems. Think of it as a USB-C port for AI: one standard plug, many devices."
+    },
+    {
+      "concept": "connectors-what",
+      "npc": "Bridgekeeper Isolde",
+      "line": "A connector links Claude to an app you already use — it can retrieve your data and take actions inside that service. The silos were never sealed; they just lacked a bridge."
+    },
+    {
+      "concept": "architecture",
+      "npc": "Bridgekeeper Isolde",
+      "line": "Three roles hold every bridge: the host (the AI application), which creates one client per connection, and the server, which provides the context. One dedicated client per server — no shared ropes."
+    },
+    {
+      "concept": "tools-vs-resources",
+      "npc": "Bridgekeeper Isolde",
+      "line": "A server offers three gifts: tools (functions the AI can invoke to act), resources (data that provides context), and prompts (reusable templates). Actions, information, and patterns — learn which is which."
+    },
+    {
+      "concept": "local-vs-remote",
+      "npc": "Bridgekeeper Isolde",
+      "line": "A local server runs on your own machine and talks over stdio; a remote server runs elsewhere and talks over streamable HTTP, serving many clients at once. Same protocol, different roads."
+    },
+    {
+      "concept": "auth-permissions",
+      "npc": "Bridgekeeper Isolde",
+      "line": "Connectors typically use OAuth: you sign in to the service itself and grant specific permissions — no password handed over, and you can revoke it all by disconnecting. Claude never gets more access than you already have."
+    },
+    {
+      "concept": "trust-security",
+      "npc": "Bridgekeeper Isolde",
+      "line": "A custom connector reaches a server no one at Anthropic has verified. Only connect to servers you trust, read the permissions you grant, and disable tools you don't need — a malicious server can smuggle instructions through prompt injection."
+    },
+    {
+      "concept": "finding-connectors",
+      "npc": "Bridgekeeper Isolde",
+      "line": "Ready-made connectors live in the Connectors Directory; a custom one just needs its remote MCP server URL. Either way, you choose what gets bridged."
+    },
+    {
+      "concept": "when-to-use",
+      "npc": "Bridgekeeper Isolde",
+      "line": "Cloud service? Use a remote connector — they work everywhere you use Claude. Local files, a localhost database, OS-level access? That needs a local desktop extension, which only works in Claude Desktop and Claude Code."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "mcp-what",
+      "prompt": "A guildmate scoffs: \"Every AI-to-tool hookup is a bespoke one-off integration.\" What is MCP, actually?",
+      "choices": [
+        "A proprietary Anthropic-only plugin format",
+        "A database Claude ships with",
+        "An open standard for connecting AI applications to external systems",
+        "A programming language for agents"
+      ],
+      "correct": 2,
+      "reteach": "MCP is an open standard, so any AI application and any tool can speak the same connection language.",
+      "hardChoices": [
+        "An Anthropic SDK for building Claude-only connectors",
+        "A REST API specification for calling LLM providers",
+        "A marketplace of verified integrations published by Anthropic"
+      ]
+    },
+    {
+      "concept": "mcp-what",
+      "prompt": "The official docs compare MCP to a piece of everyday hardware. Which one, and why?",
+      "choices": [
+        "A USB-C port — one standardized way to connect many things",
+        "A padlock — it keeps data sealed away",
+        "A hard drive — it stores your context",
+        "A CPU — it does the model's thinking"
+      ],
+      "correct": 0,
+      "reteach": "MCP is like a USB-C port for AI: one standard connection instead of a custom cable per device.",
+      "hardChoices": [
+        "A universal remote — one device that operates every app for you",
+        "A docking station — it hosts all your tools in one place",
+        "An HDMI cable — it streams context straight into the model"
+      ]
+    },
+    {
+      "concept": "connectors-what",
+      "prompt": "You enable a Google Drive connector in Claude. What does that actually make possible?",
+      "choices": [
+        "Claude memorizes your entire Drive permanently",
+        "Claude can retrieve your data and take actions in that service during a conversation",
+        "Nothing — your files are in a silo Claude can never reach",
+        "Google gains access to your Claude chats"
+      ],
+      "correct": 1,
+      "reteach": "A connector lets Claude access a connected service to retrieve data and take actions — the silo gets a bridge.",
+      "hardChoices": [
+        "Claude gains standing background access to Drive between conversations",
+        "Claude syncs a full copy of your Drive into its context window",
+        "Claude gets admin rights to manage sharing across your workspace"
+      ]
+    },
+    {
+      "concept": "connectors-what",
+      "prompt": "What technology do Claude's connectors use under the hood?",
+      "choices": [
+        "Screen scraping of each app",
+        "Emailed export files",
+        "A custom secret protocol per app",
+        "The Model Context Protocol (MCP), an open standard"
+      ],
+      "correct": 3,
+      "reteach": "Connectors are built on MCP — an open standard for AI applications to connect to tools and data.",
+      "hardChoices": [
+        "OAuth — the authorization protocol itself carries the data exchange",
+        "Anthropic's proprietary Claude Integrations API",
+        "Function calling built directly into the model weights"
+      ]
+    },
+    {
+      "concept": "architecture",
+      "prompt": "In MCP terms, when Claude Desktop connects to a GitHub MCP server and a filesystem MCP server, what is Claude Desktop?",
+      "choices": [
+        "An MCP resource",
+        "The MCP host, which creates one client per server connection",
+        "An MCP server serving two clients",
+        "A transport layer"
+      ],
+      "correct": 1,
+      "reteach": "The AI application is the host; it spins up one dedicated MCP client for each server it connects to.",
+      "hardChoices": [
+        "An MCP client that shares one connection across both servers",
+        "The MCP server, since it provides context to the model",
+        "The host, which shares a single client between the two servers"
+      ]
+    },
+    {
+      "concept": "architecture",
+      "prompt": "A host is connected to three MCP servers. How many MCP clients does it maintain?",
+      "choices": [
+        "One shared client for all servers",
+        "Zero — servers connect directly to the model",
+        "Three — a dedicated client per server",
+        "It depends on how many tools each server has"
+      ],
+      "correct": 2,
+      "reteach": "Each MCP client maintains a dedicated connection to exactly one server, so three servers means three clients.",
+      "hardChoices": [
+        "One — the host itself acts as the single client",
+        "One pooled client connection, reused across the three servers in turn",
+        "Two — local servers can share a client; remote ones cannot"
+      ]
+    },
+    {
+      "concept": "tools-vs-resources",
+      "prompt": "An MCP server for a database exposes a \"run query\" function and, separately, the database schema as readable context. In MCP terms, those are…",
+      "choices": [
+        "Both tools",
+        "A tool and a resource, respectively",
+        "A prompt and a tool, respectively",
+        "Both resources"
+      ],
+      "correct": 1,
+      "reteach": "Tools are executable functions the AI can invoke; resources are data sources that provide context.",
+      "hardChoices": [
+        "A resource and a tool, respectively",
+        "Two tools — anything a server exposes counts as a tool",
+        "A tool and a prompt, respectively"
+      ]
+    },
+    {
+      "concept": "tools-vs-resources",
+      "prompt": "Which MCP server primitive is a reusable template for structuring interactions, like a few-shot example set?",
+      "choices": [
+        "A resource",
+        "A tool",
+        "A notification",
+        "A prompt"
+      ],
+      "correct": 3,
+      "reteach": "Prompts are the third server primitive: reusable templates that help structure interactions with the model.",
+      "hardChoices": [
+        "A resource, since it's stored data the model reads",
+        "A tool the client invokes to format its messages",
+        "A sampling request sent from the server to the client"
+      ]
+    },
+    {
+      "concept": "tools-vs-resources",
+      "prompt": "Before calling any tool on a freshly connected server, what does an MCP client do first?",
+      "choices": [
+        "Discover what's available with a tools/list request",
+        "Guess tool names from the server's URL",
+        "Download the server's source code",
+        "Nothing — tool lists are hardcoded into the model"
+      ],
+      "correct": 0,
+      "reteach": "Clients discover primitives dynamically — they list available tools before calling them, so listings can change over time.",
+      "hardChoices": [
+        "Read the server's resources to infer which tools exist",
+        "Fetch the tool schemas from the Connectors Directory listing",
+        "Complete an OAuth grant authorizing each tool individually"
+      ]
+    },
+    {
+      "concept": "local-vs-remote",
+      "prompt": "One MCP server runs on your own machine over the stdio transport; another runs on a company's platform over streamable HTTP. What are these commonly called?",
+      "choices": [
+        "Primary and backup servers",
+        "Fast and slow servers",
+        "A local server and a remote server",
+        "A client and a host"
+      ],
+      "correct": 2,
+      "reteach": "Stdio-transport servers on your machine are 'local'; streamable-HTTP servers running elsewhere are 'remote'.",
+      "hardChoices": [
+        "A desktop extension and a connector — the transport names the product",
+        "A stdio client and an HTTP client",
+        "A private server and a public server"
+      ]
+    },
+    {
+      "concept": "local-vs-remote",
+      "prompt": "Which kind of MCP server typically serves many clients at once?",
+      "choices": [
+        "A local stdio server",
+        "Neither — every server is single-client",
+        "Both equally, always",
+        "A remote streamable-HTTP server"
+      ],
+      "correct": 3,
+      "reteach": "Local stdio servers typically serve one client; remote streamable-HTTP servers typically serve many.",
+      "hardChoices": [
+        "A local stdio server, since stdio streams support many readers",
+        "The MCP host, which fans connections out to many clients",
+        "Any server, once it is published in the Connectors Directory"
+      ]
+    },
+    {
+      "concept": "auth-permissions",
+      "prompt": "You add a connector and it asks you to sign in to the service itself and approve specific permissions. Why is this OAuth flow the standard approach?",
+      "choices": [
+        "It grants scoped access without ever giving Claude your password",
+        "It's faster than typing a password into Claude",
+        "It gives Claude permanent irrevocable access",
+        "It lets Claude bypass the service's own access rules"
+      ],
+      "correct": 0,
+      "reteach": "OAuth lets you sign in at the service and grant specific permissions — your password is never shared, and you can revoke access by disconnecting.",
+      "hardChoices": [
+        "It hands Claude an encrypted copy of your credentials to reuse",
+        "It certifies that Anthropic has reviewed the server's code",
+        "It raises Claude's access above your own account's permissions"
+      ]
+    },
+    {
+      "concept": "auth-permissions",
+      "prompt": "A teammate fears a connector will let Claude read files in their company drive that they themselves can't open. What's true?",
+      "choices": [
+        "Correct — connectors bypass source-system permissions",
+        "Correct, but only on weekends",
+        "Wrong — Claude's access is limited to content you can view in the source system",
+        "Wrong — Claude can see everything but won't mention it"
+      ],
+      "correct": 2,
+      "reteach": "Connector access rides on your own permissions — Claude can't see anything in the source system that you can't.",
+      "hardChoices": [
+        "Wrong — Claude only reads files you attach, never the drive itself",
+        "Right — remote servers run with the service's admin credentials",
+        "Wrong — Anthropic reviews each file before Claude can open it"
+      ]
+    },
+    {
+      "concept": "trust-security",
+      "prompt": "You find a random unofficial MCP server URL on a forum and consider adding it as a custom connector. What's the real risk?",
+      "choices": [
+        "Custom connectors are always safe because Anthropic reviews each one",
+        "Nothing — servers can only send data, never influence behavior",
+        "The URL might load slowly",
+        "It's unverified by Anthropic, and a malicious server can use prompt injection to trigger unintended actions"
+      ],
+      "correct": 3,
+      "reteach": "Custom connectors reach servers Anthropic hasn't verified — only connect to trusted ones, since malicious servers can attempt prompt injection.",
+      "hardChoices": [
+        "None, as long as the server supports OAuth sign-in",
+        "Only that its tools won't appear in the Connectors Directory",
+        "None — remote servers can't be risky; only local ones touch your machine"
+      ]
+    },
+    {
+      "concept": "trust-security",
+      "prompt": "You've connected a custom connector that exposes a dozen tools, but you only need two. Good practice?",
+      "choices": [
+        "Disable the tools you don't need and review what each permission grants",
+        "Enable everything — more tools is always safer",
+        "Delete your account to be safe",
+        "Never look at the permissions screen; it's just legal boilerplate"
+      ],
+      "correct": 0,
+      "reteach": "Reduce your surface area: review permissions carefully and disable tools you don't actually need.",
+      "hardChoices": [
+        "Keep all tools enabled — the model only calls the ones you mention",
+        "Switch it to a local server, which needs no permission review",
+        "Trust the OAuth grant — a signed-in server can't misuse its tools"
+      ]
+    },
+    {
+      "concept": "trust-security",
+      "prompt": "You want to stop a connected service's access entirely. What's the sanctioned way?",
+      "choices": [
+        "Ask Claude to promise not to use it",
+        "Disconnect the connector — that revokes the permissions you granted",
+        "There is no way; connections are permanent",
+        "Change your Claude display name"
+      ],
+      "correct": 1,
+      "reteach": "You can revoke a connector's permissions at any time by disconnecting it.",
+      "hardChoices": [
+        "Request its removal from the Connectors Directory",
+        "Change your password at the service so Claude's stored copy expires",
+        "Uninstall Claude Desktop — every connector lives on your machine"
+      ]
+    },
+    {
+      "concept": "finding-connectors",
+      "prompt": "Your team wants to hook Claude up to a service it already uses, plus one in-house tool with its own remote MCP server. Where does each connection come from?",
+      "choices": [
+        "Both must be built from scratch in code",
+        "Neither is possible — external tools stay siloed",
+        "Browse the directory of available connectors for the first; add the in-house one as a custom connector via its remote MCP server URL",
+        "Email Anthropic support to install both"
+      ],
+      "correct": 2,
+      "reteach": "Ready-made connectors are in the directory; anything with a remote MCP server can be added as a custom connector by URL.",
+      "hardChoices": [
+        "Both come from the directory — custom servers must be listed there first",
+        "Install both as local desktop extensions on each teammate's machine",
+        "Use the directory for the first; point Claude at the in-house REST API docs URL"
+      ]
+    },
+    {
+      "concept": "when-to-use",
+      "prompt": "You need Claude to work with a cloud project tracker from your phone, and separately with files on your laptop's disk. Which connector types fit?",
+      "choices": [
+        "Local for both — local is always more powerful",
+        "Remote for the cloud tool (works everywhere you use Claude); a local desktop extension for the laptop files (Claude Desktop / Claude Code only)",
+        "Remote for both — remote servers can read any laptop's disk",
+        "Neither — Claude cannot reach tools or files at all"
+      ],
+      "correct": 1,
+      "reteach": "Remote connectors are the default and work across surfaces; local desktop extensions handle on-machine access but only in Claude Desktop and Claude Code.",
+      "hardChoices": [
+        "A desktop extension for the tracker; a remote connector for the laptop files",
+        "Remote for both — streamable HTTP lets the server reach your local disk",
+        "Local for both — desktop extensions sync across every surface you use"
+      ]
+    }
+  ],
+  "petName": "Struggles",
+  "petGender": "f"
+}

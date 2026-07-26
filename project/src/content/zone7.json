@@ -1,0 +1,372 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "skillwright-atelier",
+  "zoneName": "Skillwright's Atelier",
+  "discipline": "Skills & Plugins",
+  "bossName": "The Reinventor",
+  "misconception": "You must re-explain your procedures to Claude from scratch, every single time.",
+  "sources": [
+    "https://code.claude.com/docs/en/skills",
+    "https://code.claude.com/docs/en/plugins",
+    "https://code.claude.com/docs/en/discover-plugins",
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+    "https://support.claude.com/en/articles/12512176-what-are-skills"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "skills-what",
+      "npc": "Maestra Imbry",
+      "line": "If you've pasted the same procedure twice, stop. Fold it into a skill once — Claude picks it up whenever the work calls for it."
+    },
+    {
+      "concept": "skill-md-structure",
+      "npc": "Maestra Imbry",
+      "line": "A skill is a folder with a SKILL.md at its heart. The frontmatter description is the hinge — say what it does *and* when to use it."
+    },
+    {
+      "concept": "skill-triggering",
+      "npc": "Maestra Imbry",
+      "line": "Claude reads descriptions to decide when a skill applies. You can also call one by name with a slash — or forbid Claude from ever firing it on its own."
+    },
+    {
+      "concept": "progressive-disclosure",
+      "npc": "Maestra Imbry",
+      "line": "A well-made skill whispers before it speaks: only its name and description sit in context until the work actually needs it."
+    },
+    {
+      "concept": "anthropic-skills",
+      "npc": "Maestra Imbry",
+      "line": "Anthropic ships ready-made skills — Excel, Word, PowerPoint, PDF. They wake on their own when the task fits; you never summon them by hand."
+    },
+    {
+      "concept": "custom-skills",
+      "npc": "Maestra Imbry",
+      "line": "Personal skills live in your home folder and follow you to every project; project skills live in the repo and serve only that workshop."
+    },
+    {
+      "concept": "plugins-vs-skills",
+      "npc": "Maestra Imbry",
+      "line": "A skill is one tool. A plugin is the whole toolbox — skills, agents, hooks, MCP servers — packed and versioned so others can install it."
+    },
+    {
+      "concept": "marketplaces",
+      "npc": "Maestra Imbry",
+      "line": "A marketplace is a catalog, not an installer. Add the catalog, then choose each plugin deliberately — and only from hands you trust."
+    },
+    {
+      "concept": "when-to-build",
+      "npc": "Maestra Imbry",
+      "line": "Instructions for every chat, project knowledge for standing context, a skill for the procedure you reach for again and again."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "skills-what",
+      "prompt": "Every release, you paste the same 40-line deployment checklist into Claude Code. What do the docs recommend instead?",
+      "choices": [
+        "Keep pasting it — Claude needs procedures re-explained every session",
+        "Turn it into a skill: a SKILL.md whose instructions load whenever they're needed",
+        "Append it to every prompt with a text-expander macro",
+        "Ask Claude to permanently memorize it into the model"
+      ],
+      "correct": 1,
+      "reteach": "Repeatedly pasting the same instructions is the textbook signal to fold them into a skill instead.",
+      "hardChoices": [
+        "Add it to CLAUDE.md so it loads into context at the start of every session",
+        "Package it as a plugin first — single procedures must ship as plugins",
+        "Put it in project knowledge so it's always loaded in every conversation"
+      ]
+    },
+    {
+      "concept": "skills-what",
+      "prompt": "A section of your CLAUDE.md has quietly grown into a 60-line multi-step procedure. Per the skills docs, what does that signal?",
+      "choices": [
+        "Nothing — CLAUDE.md is the right home for long procedures",
+        "Split CLAUDE.md into two memory files",
+        "Move it into a skill, since a skill's body loads only when it's used",
+        "Delete it and trust Claude to infer the steps"
+      ],
+      "correct": 2,
+      "reteach": "When CLAUDE.md content becomes a procedure rather than a fact, move it to a skill so it only costs context when used.",
+      "hardChoices": [
+        "Keep it in CLAUDE.md but add keywords so Claude matches on it like a description",
+        "Convert it to custom instructions so it applies across every conversation",
+        "Move it to a plugin's MCP server config so it loads on demand"
+      ]
+    },
+    {
+      "concept": "skill-md-structure",
+      "prompt": "You're authoring a SKILL.md. Which frontmatter field does Claude match your requests against when deciding whether to load the skill?",
+      "choices": [
+        "name",
+        "description",
+        "version",
+        "allowed-tools"
+      ],
+      "correct": 1,
+      "reteach": "The description — what the skill does and when to use it — is what Claude uses to decide when the skill applies.",
+      "hardChoices": [
+        "The SKILL.md body, which Claude scans before deciding to load",
+        "trigger-keywords, a dedicated frontmatter list of match terms",
+        "The skill's directory name, matched against the user's words"
+      ]
+    },
+    {
+      "concept": "skill-md-structure",
+      "prompt": "Which of these is a valid skill `name` under the Agent Skills format?",
+      "choices": [
+        "Brand Guidelines (Q3)",
+        "BRAND_GUIDELINES",
+        "brand-guidelines",
+        "claude-brand-helper"
+      ],
+      "correct": 2,
+      "reteach": "Skill names use lowercase letters, numbers, and hyphens only — and can't contain 'claude' or 'anthropic'.",
+      "hardChoices": [
+        "brand_guidelines",
+        "Brand-Guidelines",
+        "anthropic-brand-kit"
+      ]
+    },
+    {
+      "concept": "skill-triggering",
+      "prompt": "You wrote a /deploy skill with real side effects, and you never want Claude firing it on its own judgment. Which frontmatter line does that?",
+      "choices": [
+        "user-invocable: false",
+        "context: fork",
+        "paths: none",
+        "disable-model-invocation: true"
+      ],
+      "correct": 3,
+      "reteach": "disable-model-invocation: true means only you can trigger the skill; user-invocable: false restricts the opposite direction.",
+      "hardChoices": [
+        "user-invocable: true",
+        "model-invocation: false",
+        "auto-trigger: false"
+      ]
+    },
+    {
+      "concept": "skill-triggering",
+      "prompt": "Your new skill never activates when teammates ask related questions. Per the docs, the first fix is:",
+      "choices": [
+        "Rewrite the description to include keywords people would naturally say",
+        "Rename the skill directory to something longer",
+        "Reinstall Claude Code from scratch",
+        "Have everyone paste the skill's contents into chat manually"
+      ],
+      "correct": 0,
+      "reteach": "If a skill won't trigger, sharpen its description with the words users actually say — that's what Claude matches against.",
+      "hardChoices": [
+        "Move the trigger keywords into the SKILL.md body so Claude scans them",
+        "Set disable-model-invocation: true so the skill loads more eagerly",
+        "Convert the skill into a plugin — plugins trigger more reliably"
+      ]
+    },
+    {
+      "concept": "progressive-disclosure",
+      "prompt": "You have thirty skills installed. What actually sits in Claude's context at the start of a session?",
+      "choices": [
+        "The full body of all thirty skills",
+        "Each skill's name and description only — full instructions load when a skill is invoked",
+        "Nothing at all until you type a slash command",
+        "One random skill chosen at startup"
+      ],
+      "correct": 1,
+      "reteach": "Only lightweight metadata loads up front; a skill's full instructions enter context when it's actually used.",
+      "hardChoices": [
+        "Each SKILL.md in full, but not their bundled reference files",
+        "Only the skills you've marked as user-invocable in frontmatter",
+        "The five most recently used skills' full instructions"
+      ]
+    },
+    {
+      "concept": "progressive-disclosure",
+      "prompt": "A skill bundles a large reference.md and a validate.py script. When does the script's source code enter Claude's context?",
+      "choices": [
+        "At session start, along with all skill files",
+        "The moment the skill triggers",
+        "It doesn't have to — Claude can execute the script and only its output enters context",
+        "Never — skills can't include scripts"
+      ],
+      "correct": 2,
+      "reteach": "Bundled scripts are executed, not read into context — only their output takes up tokens.",
+      "hardChoices": [
+        "When the skill triggers, since all bundled files load together",
+        "At install time, when Claude indexes the skill's contents",
+        "Only after Claude reads reference.md, which pulls in the script"
+      ]
+    },
+    {
+      "concept": "anthropic-skills",
+      "prompt": "In the Claude app, a teammate asks for 'a formatted spreadsheet of Q3 results.' What handles the file creation?",
+      "choices": [
+        "They must first author a custom skill for spreadsheets",
+        "A plugin must be installed from a marketplace",
+        "Nothing — Claude can't produce spreadsheet files",
+        "Anthropic's pre-built xlsx skill, which Claude invokes automatically when relevant"
+      ],
+      "correct": 3,
+      "reteach": "Anthropic-created document skills activate automatically when the task fits — no setup or re-explaining needed.",
+      "hardChoices": [
+        "The xlsx skill, but only after the teammate invokes it with a slash command",
+        "A spreadsheet plugin installed from the Anthropic marketplace",
+        "Project knowledge containing spreadsheet formatting instructions"
+      ]
+    },
+    {
+      "concept": "anthropic-skills",
+      "prompt": "Which document formats do Anthropic's pre-built document skills cover?",
+      "choices": [
+        "Excel, Word, PowerPoint, and PDF",
+        "Photoshop, Illustrator, Figma, and Sketch",
+        "Markdown, HTML, CSS, and JSON",
+        "Keynote, Pages, Numbers, and RTF"
+      ],
+      "correct": 0,
+      "reteach": "The Anthropic-authored document skills are xlsx, docx, pptx, and pdf — Excel, Word, PowerPoint, and PDF.",
+      "hardChoices": [
+        "Excel, Word, PowerPoint, and Google Docs",
+        "Word, PDF, Markdown, and CSV",
+        "Excel, PDF, HTML, and plain text"
+      ]
+    },
+    {
+      "concept": "custom-skills",
+      "prompt": "In Claude Code, you want one skill available in every project you open, and another only inside a single repo. Where do they go?",
+      "choices": [
+        "Both in the repo's .claude/skills/",
+        "Both in ~/.claude/skills/",
+        "Personal: ~/.claude/skills/ — project-only: that repo's .claude/skills/",
+        "Skills can only be delivered through plugins"
+      ],
+      "correct": 2,
+      "reteach": "~/.claude/skills/ follows you across all projects; a repo's .claude/skills/ applies to that project only.",
+      "hardChoices": [
+        "Personal: the repo's .claude/skills/ — project-only: ~/.claude/skills/",
+        "Both in ~/.claude/skills/, with a projects: field limiting one to the repo",
+        "Personal: CLAUDE.md in home — project-only: the repo's CLAUDE.md"
+      ]
+    },
+    {
+      "concept": "custom-skills",
+      "prompt": "Your skill needs a long API reference and a set of worked examples. Best structure per the docs?",
+      "choices": [
+        "Inline everything into one giant SKILL.md",
+        "Keep SKILL.md lean and reference separate supporting files that load only when needed",
+        "Paste the reference into chat at the start of each session",
+        "Move the reference into CLAUDE.md instead"
+      ],
+      "correct": 1,
+      "reteach": "Keep SKILL.md focused and point to supporting files, so heavy detail loads only when it's needed.",
+      "hardChoices": [
+        "Put the reference in the description so Claude sees it before triggering",
+        "Split it into several small skills, one per worked example",
+        "Store the reference in project knowledge and keep only steps in SKILL.md"
+      ]
+    },
+    {
+      "concept": "plugins-vs-skills",
+      "prompt": "Beyond skills, what can a Claude Code plugin package?",
+      "choices": [
+        "Nothing — plugins are just renamed skills",
+        "Only MCP server configurations",
+        "Only slash commands",
+        "Agents, hooks, and MCP servers alongside skills"
+      ],
+      "correct": 3,
+      "reteach": "A plugin is a bundle: it can ship skills plus agents, hooks, and MCP servers in one installable unit.",
+      "hardChoices": [
+        "Skills and agents, but hooks must be configured per-user",
+        "Anything except MCP servers, which always install separately",
+        "Skills plus custom instructions and project knowledge"
+      ]
+    },
+    {
+      "concept": "plugins-vs-skills",
+      "prompt": "Your team wants your five workflow skills in every repo, versioned and easy to update. Docs-recommended route?",
+      "choices": [
+        "Email a zip of your .claude folder around",
+        "Package them as a plugin and distribute it through a marketplace",
+        "Have each teammate re-teach Claude the workflows in every session",
+        "Paste all five skills into each repo's CLAUDE.md"
+      ],
+      "correct": 1,
+      "reteach": "Plugins are the sharing unit — installed plugin skills arrive namespaced like /plugin-name:skill-name and update with the plugin.",
+      "hardChoices": [
+        "Publish each skill to a marketplace directly — marketplaces list skills",
+        "Add all five skills to every repo's CLAUDE.md so they version with the code",
+        "Ship them as an MCP server, the standard unit for sharing skills"
+      ]
+    },
+    {
+      "concept": "marketplaces",
+      "prompt": "Your org publishes Claude Code plugins in a GitHub repo. How do teammates get them?",
+      "choices": [
+        "Add the marketplace with /plugin marketplace add org/repo, then install individual plugins from it",
+        "Adding a marketplace automatically installs every plugin it lists",
+        "Clone the repo into node_modules",
+        "They can't — only Anthropic's own marketplace exists"
+      ],
+      "correct": 0,
+      "reteach": "A marketplace is a catalog: add it first, then install each plugin you actually want from it.",
+      "hardChoices": [
+        "Run /plugin install org/repo — installing a repo pulls in its whole catalog",
+        "Add the marketplace; each listed plugin then loads on demand automatically",
+        "Ask Anthropic to list the repo in the official marketplace first"
+      ]
+    },
+    {
+      "concept": "marketplaces",
+      "prompt": "You find a tempting plugin in a stranger's marketplace. What do the docs caution?",
+      "choices": [
+        "All plugins run fully sandboxed, so installing is always safe",
+        "Plugins can execute code with your user privileges — only install from sources you trust",
+        "Anthropic verifies that every third-party plugin works as intended",
+        "Only marketplaces can be malicious, never the plugins themselves"
+      ],
+      "correct": 1,
+      "reteach": "Treat a plugin like installed software — it runs with your privileges, so trust the source before installing.",
+      "hardChoices": [
+        "Plugins are safe once the marketplace itself comes from a trusted source",
+        "Only a plugin's MCP servers pose risk; its skills are just markdown",
+        "Review the plugin's description — malicious code can't hide elsewhere"
+      ]
+    },
+    {
+      "concept": "when-to-build",
+      "prompt": "A multi-step procedure you use occasionally, across many different chats. Best home for it?",
+      "choices": [
+        "Custom instructions, so it applies to every conversation",
+        "Project knowledge, always loaded in that project",
+        "A skill — task-specific, loading only when the task shows up",
+        "Re-typing it each time you need it"
+      ],
+      "correct": 2,
+      "reteach": "Custom instructions apply broadly and project knowledge is always-loaded; skills load only when the task is relevant.",
+      "hardChoices": [
+        "Project knowledge, since procedures belong with standing context",
+        "CLAUDE.md, the standard home for multi-step procedures",
+        "A plugin — multi-step procedures are too big for a single skill"
+      ]
+    },
+    {
+      "concept": "when-to-build",
+      "prompt": "Which situation most clearly warrants building a skill?",
+      "choices": [
+        "A checklist you keep pasting into chat again and again",
+        "A question you asked exactly once",
+        "A one-line fact that fits fine in CLAUDE.md",
+        "A tone preference meant for every conversation"
+      ],
+      "correct": 0,
+      "reteach": "Recurring procedures earn a skill; one-off requests, single facts, and global preferences belong elsewhere.",
+      "hardChoices": [
+        "A tone preference you want applied in every single conversation",
+        "A standing fact about your codebase used in every session",
+        "Background context a single project should always have loaded"
+      ]
+    }
+  ],
+  "petName": "Kitherine",
+  "petGender": "f"
+}

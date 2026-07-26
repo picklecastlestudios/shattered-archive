@@ -1,0 +1,25 @@
+{
+  "project": "CLAUDE QUEST: The Shattered Archive",
+  "era": "SNES/Genesis (16-bit)",
+  "canvas": "30x40, hard pixel grid, no anti-aliasing",
+  "paletteCeiling": 16,
+  "sharedQuantize": "one merge map across ALL frames of a character (prevents animation palette flicker)",
+  "outline": "full 1px dark outline (#141019 family) via engine outline()",
+  "light": "top-left via engine shade(); never pillow-shade",
+  "scaleRule": "integer scale, nearest-neighbor only",
+  "characters": {
+    "castle": {
+      "status": "locked 2026-07-16 (creator approved)",
+      "canon": "navy micro-dot shirt, olive pants, brown satchel strap, dark swept hair w/ quiff, full beard, dark thin-frame glasses",
+      "unlockable": "jellyfish shirt palette variant",
+      "palette": {"skin":"#e0b090","hair":"#3a2a20","beard":"#33241b","shirt":"#2c3c60","dot":"#c8d4e8","pants":"#5c6136","satchel":"#8a5a30","lens":"#cfe0ea","dark":"#26202e"}
+    },
+    "pickles": {
+      "status": "locked 2026-07-16 (creator approved, eyes-open revision)",
+      "canon": "wine velvet dress w/ pink hem, long copper spiral curls, translucent rose-gold cat-eye glasses (frames #b8824a), choker + gold pendant, red lips",
+      "unlockable": "pink fuzzy coat palette variant",
+      "palette": {"skin":"#f0c8a8","hair":"#b06438","dress":"#71203a","pink":"#e85a8a","frames":"#b8824a","lens":"#f6e6da","gold":"#ffd166","lips":"#c03a50","dark":"#26202e"}
+    }
+  },
+  "animation": {"walk": "4 frames (contact/pass/contact/pass), sequence [0,0,1,2,2,3] for 60/40 contact weighting, ~9 FPS", "facings": "down/up/side; side flips horizontally for left"}
+}

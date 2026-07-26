@@ -1,0 +1,375 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "automation-spire",
+  "zoneName": "The Automation Spire",
+  "discipline": "Automation & the Developer Platform",
+  "bossName": "Entropy Prime",
+  "misconception": "Without you watching, it all falls apart — nothing can run reliably on its own.",
+  "sources": [
+    "https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork",
+    "https://code.claude.com/docs/en/scheduled-tasks",
+    "https://code.claude.com/docs/en/github-actions",
+    "https://code.claude.com/docs/en/sub-agents",
+    "https://platform.claude.com/docs/en/api/overview",
+    "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+    "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "https://code.claude.com/docs/en/agent-sdk/overview"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "scheduled-tasks",
+      "npc": "Clockwarden Ilex",
+      "line": "A scheduled task fires on its own clock — hourly, daily, weekdays — and each firing starts a fresh session. Write the prompt as a complete standalone instruction, because the run remembers nothing."
+    },
+    {
+      "concept": "unattended-work",
+      "npc": "Clockwarden Ilex",
+      "line": "Work scheduled to the cloud runs remotely — it keeps going while your laptop sleeps. Work bound to an open session stops the moment that session ends. Know which kind you built."
+    },
+    {
+      "concept": "ci-integration",
+      "npc": "Clockwarden Ilex",
+      "line": "Wire Claude into GitHub Actions and a simple @claude mention in a PR or issue summons it — analyzing code, fixing bugs, opening pull requests, all following your project's CLAUDE.md standards."
+    },
+    {
+      "concept": "subagents-parallel",
+      "npc": "Clockwarden Ilex",
+      "line": "A subagent works in its own context window and hands back only the summary. Delegate the noisy exploration; keep your main thread clean. Independent tasks can run as separate subagents simultaneously."
+    },
+    {
+      "concept": "api-what",
+      "npc": "Clockwarden Ilex",
+      "line": "The Messages API is stateless: every request stands alone. If you want Claude to remember the conversation, your code sends the whole history back each time. That's not a flaw — it's your control."
+    },
+    {
+      "concept": "tool-use-concept",
+      "npc": "Clockwarden Ilex",
+      "line": "Tool use is a contract: Claude never runs your function itself. It returns a structured request — this tool, these arguments — your code executes it and sends the result back. The loop is the power."
+    },
+    {
+      "concept": "prompt-caching-concept",
+      "npc": "Clockwarden Ilex",
+      "line": "When every call carries the same heavy prefix — system prompt, big document, tool definitions — prompt caching lets Claude reread it from cache instead of reprocessing it. Stable content in front, changing content behind."
+    },
+    {
+      "concept": "agent-sdk-concept",
+      "npc": "Clockwarden Ilex",
+      "line": "The Agent SDK is Claude Code's harness as a library — the tools, agent loop, and context management, programmable in Python and TypeScript. Raw API when you want a completion; Agent SDK when you want an agent that acts."
+    },
+    {
+      "concept": "choosing-the-right-tool",
+      "npc": "Clockwarden Ilex",
+      "line": "Match the automation to the trigger: a clock says scheduled task, a repository event says GitHub Actions, a big side-investigation says subagent, a custom product says the API or Agent SDK. The Spire has a floor for each."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "scheduled-tasks",
+      "prompt": "You want a briefing summarizing your connected tools' activity waiting for you every weekday at 9am — without ever opening Claude to ask. What do you set up?",
+      "choices": [
+        "Nothing works — Claude only runs while you're actively watching it",
+        "A very long single chat you keep open forever",
+        "A scheduled task on a weekday recurrence — each run executes on its own and you review the result",
+        "A Project with the request in its instructions"
+      ],
+      "correct": 2,
+      "reteach": "Scheduled tasks run recurring work on a set cadence — hourly, daily, weekly, or weekdays — with no manual restart.",
+      "hardChoices": [
+        "A /loop in an open Claude Code session set to fire every weekday morning",
+        "A GitHub Actions workflow — CI is the standard way to run anything on a schedule",
+        "An Agent SDK script you run manually each morning to generate the briefing"
+      ]
+    },
+    {
+      "concept": "scheduled-tasks",
+      "prompt": "Your scheduled task's prompt says \"continue what we discussed.\" Why will this fail?",
+      "choices": [
+        "Each firing starts a fresh, independent session — the prompt must be a complete standalone instruction",
+        "Scheduled tasks can't accept prompts longer than one word",
+        "It won't fail — every run remembers the chat where you created it",
+        "Scheduled prompts must be written in cron syntax"
+      ],
+      "correct": 0,
+      "reteach": "Every scheduled run is its own independent session with no memory of past conversations, so write the prompt to stand entirely alone.",
+      "hardChoices": [
+        "The task binds to your chat but only keeps the last few messages of context",
+        "Scheduled runs share memory only with other runs of the same task, not your chat",
+        "It fails only if the task runs in the cloud; desktop tasks keep the chat context"
+      ]
+    },
+    {
+      "concept": "unattended-work",
+      "prompt": "Your scheduled task fires at 6am while your laptop is closed and asleep. What happens with a cloud-scheduled task?",
+      "choices": [
+        "It fails — Claude can't do anything while your machine is off",
+        "It runs anyway — cloud tasks execute remotely and don't need your machine on",
+        "It waits at the login screen until you wake the laptop",
+        "It runs at half speed using your laptop's reserve battery"
+      ],
+      "correct": 1,
+      "reteach": "Cloud scheduled tasks execute remotely, so they keep running even when your computer sleeps or the app is closed.",
+      "hardChoices": [
+        "It runs only if the Claude desktop app was left open in the background",
+        "It queues and fires immediately the next time your laptop wakes",
+        "It runs remotely but can't use connected tools until your machine is back online"
+      ]
+    },
+    {
+      "concept": "unattended-work",
+      "prompt": "In Claude Code you set a /loop to re-check a deploy every 10 minutes, then close the terminal for the night. What actually happens?",
+      "choices": [
+        "The loop keeps firing forever — /loop runs in the cloud",
+        "The loop transfers itself to GitHub automatically",
+        "Claude Code emails you the results instead",
+        "The loop stops firing — /loop is session-scoped; unattended work needs a cloud/desktop scheduled task or CI instead"
+      ],
+      "correct": 3,
+      "reteach": "Session-scoped loops only fire while the session is running — durable unattended scheduling belongs in cloud tasks, desktop tasks, or CI.",
+      "hardChoices": [
+        "The loop hands off to a cloud scheduled task automatically when the session ends",
+        "It keeps firing as long as your laptop stays awake, even with the terminal closed",
+        "The final loop iteration completes in the background, then it stops"
+      ]
+    },
+    {
+      "concept": "ci-integration",
+      "prompt": "With Claude Code GitHub Actions installed on your repo, a teammate types \"@claude fix the TypeError in the dashboard component\" in an issue comment. What can happen next?",
+      "choices": [
+        "Claude analyzes the code and can implement the fix and open a pull request — following the repo's CLAUDE.md standards",
+        "Nothing — Claude can't be triggered from inside GitHub",
+        "GitHub forwards the comment to your personal chat for you to handle live",
+        "Claude replies with advice but can never touch code from CI"
+      ],
+      "correct": 0,
+      "reteach": "A simple @claude mention in a PR or issue can have Claude analyze code, implement fixes, and create pull requests, guided by your CLAUDE.md.",
+      "hardChoices": [
+        "Claude analyzes and comments a suggested diff, but a human must open the PR",
+        "It works only on pull request comments, not issue comments",
+        "Claude opens a PR but ignores CLAUDE.md — CI runs don't read repo config files"
+      ]
+    },
+    {
+      "concept": "ci-integration",
+      "prompt": "You're adding the Claude API key to your GitHub Actions workflow. What's the correct handling?",
+      "choices": [
+        "Paste it directly into the workflow YAML so it's easy to find",
+        "Post it in the repo README with a warning not to copy it",
+        "Store it as a GitHub repository secret and reference the secret in the workflow",
+        "Commit it in a file named do-not-read.txt"
+      ],
+      "correct": 2,
+      "reteach": "Never commit API keys — store them as GitHub Secrets and reference the secret name in the workflow.",
+      "hardChoices": [
+        "Store it in CLAUDE.md so Claude reads it automatically on each run",
+        "Put it in an untracked .env file in the repo — Actions loads it automatically",
+        "Base64-encode it in the workflow YAML so it isn't stored in plain text"
+      ]
+    },
+    {
+      "concept": "subagents-parallel",
+      "prompt": "A research side-task would flood your main Claude Code conversation with search results and file dumps you'll never reference again. Best move?",
+      "choices": [
+        "Do it in the main thread and scroll past the noise later",
+        "Delegate it to a subagent — it works in its own context window and returns only the summary",
+        "Restart the whole session after every search",
+        "Paste the results into a second monitor"
+      ],
+      "correct": 1,
+      "reteach": "A subagent does noisy exploration in its own context window and hands back only the conclusion, keeping your main conversation clean.",
+      "hardChoices": [
+        "Use prompt caching so the search results are cached instead of filling context",
+        "Run it in the main thread but ask Claude to compact the context afterward",
+        "Spawn a scheduled task to do the research on its own recurring cadence"
+      ]
+    },
+    {
+      "concept": "subagents-parallel",
+      "prompt": "You need the authentication, database, and API modules each investigated independently. What does Claude Code let you do?",
+      "choices": [
+        "Only one investigation per day is allowed",
+        "Nothing — you must personally supervise each investigation in sequence or the results can't be trusted",
+        "Merge all three into one giant prompt so nothing is missed",
+        "Spawn a separate subagent for each module and run them in parallel"
+      ],
+      "correct": 3,
+      "reteach": "Independent investigations can run as multiple subagents simultaneously, each in its own context, reporting findings back.",
+      "hardChoices": [
+        "Run one subagent three times in sequence — subagents can't run concurrently",
+        "Open three scheduled tasks so each module is investigated on its own clock",
+        "Ask the Messages API directly — parallel work needs stateless API calls"
+      ]
+    },
+    {
+      "concept": "api-what",
+      "prompt": "A developer asks what the Messages API fundamentally is. Best answer?",
+      "choices": [
+        "A stateless request/response endpoint: you send a model choice, messages, and parameters; Claude returns a response — no server-side conversation memory",
+        "A live socket where Claude remembers every user forever",
+        "A file-sync service for uploading documents",
+        "A dashboard for monitoring Claude's mood"
+      ],
+      "correct": 0,
+      "reteach": "The Messages API is stateless request/response — each call is independent, and any conversation memory is content you send.",
+      "hardChoices": [
+        "A stateful endpoint that stores each conversation server-side under a thread ID",
+        "Claude Code's agent loop exposed over HTTP with built-in tool execution",
+        "A managed hosting service that runs your agent and its tools in Anthropic's cloud"
+      ]
+    },
+    {
+      "concept": "api-what",
+      "prompt": "Your app's users complain Claude \"forgets\" everything they said one message ago. As the developer, what's the actual bug?",
+      "choices": [
+        "The model is broken and needs a restart",
+        "You need to shout the context in capital letters",
+        "Your code isn't including the prior messages in each request — the stateless API only knows what you send it",
+        "Claude only remembers paying users"
+      ],
+      "correct": 2,
+      "reteach": "Because the API is stateless, your application must send the conversation history with every request — omit it and Claude genuinely has never seen it.",
+      "hardChoices": [
+        "You forgot to enable the API's session mode, which persists chats server-side",
+        "Prompt caching is off — the cache is what carries memory between calls",
+        "You should switch to the Agent SDK — only agents can remember prior turns"
+      ]
+    },
+    {
+      "concept": "tool-use-concept",
+      "prompt": "You define a lookup_order tool for your support bot. When Claude decides to use it, what actually happens?",
+      "choices": [
+        "Claude reaches into your database directly and runs the query itself",
+        "Claude returns a structured request naming the tool and arguments — your code executes it and sends the result back for Claude to use",
+        "The tool definition alone teaches Claude every order in the database",
+        "Claude emails your DBA to run it manually"
+      ],
+      "correct": 1,
+      "reteach": "For your own tools, Claude requests the call; your application executes it and returns the result — Claude never runs your code itself.",
+      "hardChoices": [
+        "Claude executes the tool in a managed sandbox and returns the query results",
+        "The API server runs your function and injects the output into Claude's reply",
+        "Claude calls your database only after you approve each request in the console"
+      ]
+    },
+    {
+      "concept": "tool-use-concept",
+      "prompt": "Which job is the reason you'd reach for tool use in the first place?",
+      "choices": [
+        "Letting Claude fetch live data or act on external systems it couldn't otherwise touch — like querying today's inventory",
+        "Making Claude's prose more poetic",
+        "Reducing the length of Claude's answers",
+        "Encrypting the conversation"
+      ],
+      "correct": 0,
+      "reteach": "Tool use exists to connect Claude to live data and external actions — things outside what any prompt alone could contain.",
+      "hardChoices": [
+        "Guaranteeing structured JSON output — tool use is mainly a formatting feature",
+        "Caching heavy tool definitions so repeated calls get cheaper and faster",
+        "Letting Claude run its own code server-side without your app in the loop"
+      ]
+    },
+    {
+      "concept": "prompt-caching-concept",
+      "prompt": "Your product sends the same 80-page policy manual plus system prompt on every one of thousands of daily API calls; only the user's question changes. What concept directly targets this waste?",
+      "choices": [
+        "Asking users to read the manual themselves",
+        "Deleting the manual — rules are a vibe",
+        "Prompt caching — the stable prefix is cached and reused across calls, cutting cost and latency instead of reprocessing it every time",
+        "Sending the manual only on odd-numbered requests"
+      ],
+      "correct": 2,
+      "reteach": "Prompt caching reuses a stable prompt prefix across many calls, so repeated heavy content is read from cache instead of reprocessed.",
+      "hardChoices": [
+        "Tool use — register the manual as a tool so Claude fetches it only when needed",
+        "The Agent SDK's context management, which compacts the manual automatically",
+        "A scheduled task that pre-loads the manual into every future session"
+      ]
+    },
+    {
+      "concept": "prompt-caching-concept",
+      "prompt": "Which content is the RIGHT candidate for prompt caching?",
+      "choices": [
+        "The part that changes on every single request",
+        "Stable, repeated content — system prompts, large reference documents, tool definitions",
+        "Random numbers you generate per call",
+        "Nothing — caching applies to model weights, not prompts"
+      ],
+      "correct": 1,
+      "reteach": "Caching pays off on stable reused content like system prompts, big documents, and tool definitions — not on parts that vary per request.",
+      "hardChoices": [
+        "The user's newest question, since it's the part Claude reads most carefully",
+        "Tool results returned mid-conversation — caching targets outputs, not inputs",
+        "Whole conversations, so the API can restore them server-side between sessions"
+      ]
+    },
+    {
+      "concept": "agent-sdk-concept",
+      "prompt": "What does the Claude Agent SDK actually give a developer?",
+      "choices": [
+        "A no-code website builder",
+        "A faster internet connection to the API",
+        "A GUI theme for the terminal",
+        "Claude Code's harness as a library — built-in tools, the agent loop, and context management, programmable in Python and TypeScript"
+      ],
+      "correct": 3,
+      "reteach": "The Agent SDK packages the tools, agent loop, and context management that power Claude Code into a library you drive from Python or TypeScript.",
+      "hardChoices": [
+        "A hosted service where Anthropic runs your agent's tools on their servers",
+        "A thin HTTP wrapper over the Messages API with no tools or loop included",
+        "Claude Code's terminal UI repackaged — scripting it still requires the CLI open"
+      ]
+    },
+    {
+      "concept": "agent-sdk-concept",
+      "prompt": "You're building an agent that must autonomously read files, run commands, and edit code inside a pipeline. Raw Messages API or Agent SDK — and why?",
+      "choices": [
+        "Agent SDK — with the raw API you'd implement the whole tool-execution loop yourself; the SDK ships it built in",
+        "Raw API — SDKs are only for beginners",
+        "Neither — autonomous file editing is impossible from any program",
+        "Raw API — it includes a built-in file editor already"
+      ],
+      "correct": 0,
+      "reteach": "With direct API access you implement tool execution yourself; the Agent SDK ships built-in tools and the agent loop, which is exactly what an autonomous agent needs.",
+      "hardChoices": [
+        "Raw API — tool use means Claude already executes files and commands itself",
+        "Agent SDK — the raw Messages API doesn't support tool use at all",
+        "Either works the same — the SDK is just the API client with retries added"
+      ]
+    },
+    {
+      "concept": "choosing-the-right-tool",
+      "prompt": "SYNTHESIS: You want a weekly report compiled from your connected tools' data, delivered every Monday without anyone asking. What do you combine?",
+      "choices": [
+        "A really detailed one-time prompt you re-paste each Monday",
+        "A scheduled task on a weekly cadence whose standalone prompt uses your connected tools",
+        "It can't be trusted — automation falls apart the moment no one is watching",
+        "A subagent inside a chat you promise not to close"
+      ],
+      "correct": 1,
+      "reteach": "Recurring unattended deliverables are a scheduled task: a weekly recurrence plus a standalone prompt that draws on your connected tools.",
+      "hardChoices": [
+        "A subagent spawned each Monday — subagents fire on their own recurring clock",
+        "A GitHub Actions cron workflow — connected-tool reports are a CI job",
+        "A cloud session left open with a /loop set to a seven-day interval"
+      ]
+    },
+    {
+      "concept": "choosing-the-right-tool",
+      "prompt": "SYNTHESIS: Match the trigger to the tool — work that must run on every pull request in your repository belongs in…",
+      "choices": [
+        "A daily scheduled task that hopefully coincides with PRs",
+        "A /loop you keep alive in a terminal forever",
+        "GitHub Actions — CI reacts to repository events like a PR opening, which no clock-based schedule can do",
+        "A Project instruction saying \"watch the repo\""
+      ],
+      "correct": 2,
+      "reteach": "Clock-driven work is a scheduled task; event-driven repository work — like reacting to every PR — is CI via GitHub Actions.",
+      "hardChoices": [
+        "An hourly scheduled task that polls the repo for new pull requests",
+        "An Agent SDK script on your laptop subscribed to live PR events",
+        "A cloud scheduled task — cloud runs can react to repository events"
+      ]
+    }
+  ],
+  "petName": "Juno",
+  "petGender": "f"
+}

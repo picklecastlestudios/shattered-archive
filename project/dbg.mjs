@@ -1,0 +1,21 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 960, height: 540 } });
+p.on('pageerror', e => console.log('PAGEERR', String(e).slice(0,200)));
+await p.goto('file:///home/claude/work/claude-quest/dist/index.html');
+await p.waitForTimeout(3000);
+// texture keys present?
+const keys = await p.evaluate(() => Object.keys(window.game?.textures?.list || {}).filter(k=>!k.startsWith('__')));
+console.log('textures:', keys.length, keys.slice(0,8).join(','), '...');
+const cv = await p.$('canvas'); const box = await cv.boundingBox();
+console.log('canvas box:', JSON.stringify(box));
+const tap = (x, y) => p.mouse.click(box.x + box.width * x / 480, box.y + box.height * y / 270);
+const scene = async () => p.evaluate(() => window.game?.scene?.getScenes(true).map(s=>s.scene.key).join(','));
+console.log('scene0:', await scene());
+await tap(240, 180); await p.waitForTimeout(800);
+console.log('scene1:', await scene());
+await p.screenshot({ path: '/tmp/d_select.png' });
+await tap(150, 130); await p.waitForTimeout(900);
+console.log('scene2:', await scene());
+console.log('save:', await p.evaluate(() => localStorage.getItem('claude_quest_save_v1')?.slice(0,140)));
+await b.close();

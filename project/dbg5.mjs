@@ -1,0 +1,26 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 960, height: 540 } });
+p.on('console', m => console.log('PAGE:', m.text()));
+p.on('pageerror', e => console.log('PAGEERR', String(e).slice(0,300)));
+await p.goto('file:///home/claude/work/claude-quest/dist/index.html');
+await p.waitForTimeout(3000);
+const cv = await p.$('canvas'); const box = await cv.boundingBox();
+const tap = (x, y) => p.mouse.click(box.x + box.width * x / 480, box.y + box.height * y / 270);
+await tap(240, 180); await p.waitForTimeout(700);
+await tap(150, 130); await p.waitForTimeout(900);
+await tap(60, 58); await p.waitForTimeout(1000);
+await p.evaluate(() => {
+  const ow = window.game.scene.getScene('overworld');
+  const P = Object.getPrototypeOf(ow);
+  const origClose = P.closeDialogue, origTalk = P.talkWren;
+  P.closeDialogue = function(){ console.log('CLOSE dlg'); return origClose.call(this); };
+  P.talkWren = function(){ console.log('TALK wren'); return origTalk.call(this); };
+  window.addEventListener('keydown', e => { if (e.key==='e'||e.key==='E') console.log('DOM keydown e, dlgOpen=', ow.dlgOpen); }, true);
+});
+await p.keyboard.down('ArrowLeft'); await p.waitForTimeout(1900); await p.keyboard.up('ArrowLeft');
+await p.keyboard.down('ArrowUp'); await p.waitForTimeout(600); await p.keyboard.up('ArrowUp');
+console.log('--- e1'); await p.keyboard.press('e'); await p.waitForTimeout(300);
+console.log('--- e2'); await p.keyboard.press('e'); await p.waitForTimeout(300);
+console.log('--- e3'); await p.keyboard.press('e'); await p.waitForTimeout(300);
+await b.close();

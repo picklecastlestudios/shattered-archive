@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Shattered Archive</title>
+  <style>html,body{margin:0;height:100%;background:#0d0b14;touch-action:manipulation;-webkit-user-select:none;user-select:none;overscroll-behavior:none}#app{height:100%}canvas{image-rendering:pixelated}
+  /* portrait hint: non-blocking banner, CSS-only, disappears on rotate (pre-1.0 accessibility gap) */
+  #rotate{display:none}
+  @media (orientation: portrait) and (max-width: 700px){#rotate{display:block;position:fixed;top:0;left:0;right:0;z-index:40;background:#241f38;color:#9a8fc0;font:11px monospace;text-align:center;padding:6px 8px;border-bottom:1px solid #4a3f6b;pointer-events:none}}</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="rotate">⟳ rotate your device sideways for the best view</div>
+<div id="boot" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#9a8fc0;font:12px monospace;text-align:center;padding:20px;pointer-events:none;white-space:pre-wrap">LOADING THE ARCHIVE&hellip;</div>
+<script>
+// Keyboard guard: Phaser captures WASD/E/space/number keys on window and calls
+// preventDefault, which SWALLOWS those characters in the bug-report textarea
+// (real player report: "won't let you type certain letters"). This capture-phase
+// listener runs BEFORE Phaser's (registered first, inline pre-module) and stops
+// the event from reaching Phaser whenever a DOM field is focused — the field's
+// default action (inserting the char) still fires, the game just never sees it.
+(function(){
+  var stop = function(e){
+    var el = document.activeElement;
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) e.stopImmediatePropagation();
+  };
+  window.addEventListener('keydown', stop, true);
+  window.addEventListener('keyup', stop, true);
+})();
+// Boot diagnostics — precursor of the game's error log. Shows real errors instead of a black screen.
+window.__bootlog = ['js:ok'];
+window.__bootmark = function(m){ window.__bootlog.push(m); var b=document.getElementById('boot'); if(b) b.textContent='LOADING THE ARCHIVE\u2026\n['+window.__bootlog.join(' \u2192 ')+']'; };
+window.__bootmark('html:ok');
+function bootFail(msg){ var b=document.getElementById('boot'); if(b){ b.style.color='#ff6b81'; b.textContent='BOOT ERROR\n'+msg+'\n\n(screenshot this for Claude)'; } }
+window.addEventListener('error', function(e){ bootFail((e.message||'unknown')+ (e.filename?'\n'+e.filename+':'+e.lineno:'')); });
+window.addEventListener('unhandledrejection', function(e){ bootFail('promise: '+(e.reason&&e.reason.message||e.reason)); });
+</script>
+<div id="gear" style="position:fixed;top:8px;right:8px;z-index:50;font:16px monospace;color:#9a8fc0;cursor:pointer;padding:6px;user-select:none">⚙</div>
+<!-- persistent bug-report button (playtest): pixel beetle behind a no-symbol, sits beside the gear -->
+<div id="bugbtn" title="Report a bug" style="position:fixed;top:8px;right:40px;z-index:50;cursor:pointer;padding:6px;line-height:0;display:flex;align-items:center;justify-content:center">
+<svg width="18" height="18" viewBox="0 0 16 16" aria-label="report a bug">
+  <g shape-rendering="crispEdges">
+    <!-- antennae -->
+    <rect x="5" y="1" width="1" height="2" fill="#9a8fc0"/><rect x="10" y="1" width="1" height="2" fill="#9a8fc0"/>
+    <!-- head -->
+    <rect x="6" y="3" width="4" height="2" fill="#26202e"/>
+    <!-- legs -->
+    <rect x="3" y="6" width="2" height="1" fill="#9a8fc0"/><rect x="11" y="6" width="2" height="1" fill="#9a8fc0"/>
+    <rect x="3" y="9" width="2" height="1" fill="#9a8fc0"/><rect x="11" y="9" width="2" height="1" fill="#9a8fc0"/>
+    <rect x="3" y="12" width="2" height="1" fill="#9a8fc0"/><rect x="11" y="12" width="2" height="1" fill="#9a8fc0"/>
+    <!-- body: shell, split + spots -->
+    <rect x="5" y="5" width="6" height="9" fill="#c8a070"/>
+    <rect x="7" y="5" width="2" height="9" fill="#8a5a30"/>
+    <rect x="5" y="7" width="1" height="1" fill="#26202e"/><rect x="10" y="8" width="1" height="1" fill="#26202e"/>
+    <rect x="6" y="11" width="1" height="1" fill="#26202e"/><rect x="10" y="6" width="1" height="1" fill="#26202e"/>
+  </g>
+  <!-- prohibition overlay: circle + diagonal = "no bugs" -->
+  <circle cx="8" cy="8" r="6.6" fill="none" stroke="#ff6b81" stroke-width="1.7"/>
+  <line x1="3.4" y1="3.4" x2="12.6" y2="12.6" stroke="#ff6b81" stroke-width="1.7"/>
+</svg>
+</div>
+<div id="panel" style="display:none;position:fixed;top:36px;right:8px;z-index:50;background:#241f38;border:1px solid #4a3f6b;padding:10px;width:290px;font:11px monospace;color:#e8e0ff">
+  <div style="color:#ffd166;margin-bottom:6px">SAVE &amp; DIAGNOSTICS<span id="b-close" style="float:right;color:#ff6b81;cursor:pointer;padding:0 4px;font-weight:bold" title="Close">✕</span></div>
+  <button id="b-exp" style="width:100%;margin:2px 0">Copy save code</button>
+  <button id="b-imp" style="width:100%;margin:2px 0">Load save code (paste below first)</button>
+  <button id="b-diag" style="width:100%;margin:2px 0">Copy error log for Claude</button>
+  <button id="b-bug" style="width:100%;margin:2px 0">🐞 Report a bug (describe below first)</button>
+  <div id="sendrow" style="display:none;margin:2px 0">
+    <div style="color:#ffd166;margin:4px 0 2px">Now send it to us:</div>
+    <button id="b-share" style="width:100%;margin:2px 0">📤 Send report… (pick Messages, Discord, etc.)</button>
+    <button id="b-mail" style="width:100%;margin:2px 0">📧 Email it to Pickle Castle</button>
+  </div>
+  <textarea id="ta" rows="4" style="width:100%;margin-top:4px;background:#0d0b14;color:#e8e0ff;border:1px solid #4a3f6b;font:10px monospace" placeholder="save codes / diagnostics appear here"></textarea>
+  <div id="msg" style="color:#7ae0ff;min-height:14px;margin-top:2px"></div>
+</div>
+<script>
+(function(){
+  var gear=document.getElementById('gear'),panel=document.getElementById('panel'),ta=document.getElementById('ta'),msg=document.getElementById('msg');
+  gear.addEventListener('click',function(){panel.style.display=panel.style.display==='none'?'block':'none';});
+  document.getElementById('bugbtn').addEventListener('click',function(){
+    if(panel.style.display==='block'){panel.style.display='none';return;}
+    panel.style.display='block';
+    msg.textContent='Describe what went wrong, then press Report.';
+    ta.value='';ta.placeholder='what happened? (then press 🐞 Report a bug)';ta.focus();
+  });
+  document.getElementById('b-close').addEventListener('click',function(){panel.style.display='none';});
+  function put(text,note){ta.value=text;ta.select();try{document.execCommand('copy');msg.textContent=note+' (copied)';}catch(e){msg.textContent=note+' — select & copy manually';}}
+  document.getElementById('b-exp').addEventListener('click',function(){if(window.CQ)put(window.CQ.exportSave(),'Save code ready');});
+  document.getElementById('b-diag').addEventListener('click',function(){if(window.CQ)put(window.CQ.exportDiagnostics(),'Diagnostics ready — paste to Claude');});
+  var lastCode='';
+  var sendrow=document.getElementById('sendrow');
+  document.getElementById('b-bug').addEventListener('click',function(){
+    if(!window.CQ)return;
+    var note=ta.value.trim();
+    if(!note||note.indexOf('CQ')===0){msg.textContent='Type what went wrong in the box first, then press Report.';ta.value='';ta.focus();return;}
+    var r=window.CQ.fileReport(note);
+    lastCode=r.code;
+    put(r.code,'Report #'+r.count+' saved & copied');
+    sendrow.style.display='block';
+    if(!navigator.share)document.getElementById('b-share').style.display='none';
+  });
+  document.getElementById('b-share').addEventListener('click',function(){
+    if(navigator.share)navigator.share({title:'Shattered Archive bug report',text:lastCode}).catch(function(){});
+  });
+  document.getElementById('b-mail').addEventListener('click',function(){
+    var body=lastCode.length<1500?lastCode:'My report code is copied to my clipboard — pasting it here:\n\n';
+    location.href='mailto:pickle.castle.studios@gmail.com?subject='+encodeURIComponent('Shattered Archive bug report')+'&body='+encodeURIComponent(body);
+    msg.textContent=lastCode.length<1500?'Email opened with your code inside.':'Email opened — paste the code (already copied) into it.';
+  });
+  document.getElementById('b-imp').addEventListener('click',function(){
+    if(!window.CQ)return;
+    if(window.CQ.importSave(ta.value)){msg.textContent='Save loaded! Reloading…';setTimeout(function(){location.reload();},600);}
+    else msg.textContent='Invalid save code.';
+  });
+})();
+</script>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

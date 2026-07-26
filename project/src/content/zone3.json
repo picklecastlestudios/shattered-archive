@@ -1,0 +1,380 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "cowork-caverns",
+  "zoneName": "Cowork Caverns",
+  "discipline": "Cowork",
+  "bossName": "The Micromanager",
+  "misconception": "AI can't be delegated real work — you have to do everything yourself, step by step.",
+  "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork",
+    "https://claude.com/docs/cowork/overview",
+    "https://support.claude.com/en/articles/14479288-claude-cowork-architecture-overview",
+    "https://support.claude.com/en/articles/13364135-use-claude-cowork-safely",
+    "https://support.claude.com/en/articles/13947068-assign-tasks-from-anywhere-in-claude-cowork",
+    "https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "what-cowork-is",
+      "npc": "Delvemaster Orin",
+      "line": "Cowork is Claude's agentic workspace — the same engine that powers Claude Code, turned loose on knowledge work with no terminal required. You describe the outcome; it does the digging."
+    },
+    {
+      "concept": "cloud-vs-computer",
+      "npc": "Delvemaster Orin",
+      "line": "A remote session runs on Anthropic's servers in an isolated sandbox, not on your machine. Close the laptop, walk away — the work keeps going without you."
+    },
+    {
+      "concept": "file-handling",
+      "npc": "Delvemaster Orin",
+      "line": "Claude only touches folders you've connected — never the whole drive. On desktop it reads and writes those files directly, no uploading and downloading by hand."
+    },
+    {
+      "concept": "delegation",
+      "npc": "Delvemaster Orin",
+      "line": "Don't hand-feed pebbles. State the outcome you want, and Cowork breaks the job into subtasks — even running parallel workstreams — and coordinates them itself."
+    },
+    {
+      "concept": "task-tracking",
+      "npc": "Delvemaster Orin",
+      "line": "Your tasks live in a list in the sidebar, and Claude reports the outcome — the finished spreadsheet, the memo — rather than narrating every swing of the pick. A push notification can fetch you when it's done or needs your go-ahead."
+    },
+    {
+      "concept": "connectors-in-cowork",
+      "npc": "Delvemaster Orin",
+      "line": "Cowork taps the same connectors, skills, and plugins as the rest of Claude. Connect your tools once and every dig can draw on them."
+    },
+    {
+      "concept": "outputs",
+      "npc": "Delvemaster Orin",
+      "line": "The ore that comes out is polished: Excel spreadsheets with working formulas, PowerPoint decks, formatted documents — real deliverables, not just chat text."
+    },
+    {
+      "concept": "scheduled-tasks-basics",
+      "npc": "Delvemaster Orin",
+      "line": "A scheduled task runs on its own cadence, remotely — your computer can be asleep and the shift still gets worked. Each run is its own session you can review, and you can pause, edit, or fire it on demand."
+    },
+    {
+      "concept": "safety-basics",
+      "npc": "Delvemaster Orin",
+      "line": "Be choosy about which tunnels you open. Keep credentials and financial records out of connected folders — a dedicated working folder is the safest shaft."
+    },
+    {
+      "concept": "projects-in-cowork",
+      "npc": "Delvemaster Orin",
+      "line": "Projects group related tasks into workspaces with their own instructions, context, and memory — and what Claude learns in one project stays in that project."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "what-cowork-is",
+      "prompt": "A teammate asks what Cowork actually is. What's the accurate answer?",
+      "choices": [
+        "A chat mode with longer replies",
+        "A cloud drive for storing files",
+        "An agentic workspace where Claude executes complex, multi-step tasks on your behalf",
+        "A code editor for developers only"
+      ],
+      "correct": 2,
+      "reteach": "Cowork is Claude's agentic workspace — you describe a desired outcome and Claude autonomously carries out the multi-step work.",
+      "hardChoices": [
+        "A chat conversation with connectors enabled and a longer context window",
+        "A cloud file manager that organizes and syncs your connected folders",
+        "Claude Code's terminal, repackaged with a friendlier name for developers"
+      ]
+    },
+    {
+      "concept": "what-cowork-is",
+      "prompt": "How does Cowork relate to Claude Code?",
+      "choices": [
+        "It uses the same agentic architecture, brought to knowledge work without opening a terminal",
+        "There's no relation at all",
+        "Cowork is Claude Code with fewer capabilities",
+        "Cowork replaces Claude Code for programming"
+      ],
+      "correct": 0,
+      "reteach": "Cowork runs on the same agentic architecture that powers Claude Code — aimed at knowledge work, no terminal needed.",
+      "hardChoices": [
+        "It's a graphical wrapper that still needs the Claude Code CLI installed underneath",
+        "They share branding, but run on entirely separate architectures",
+        "It's Claude Code restricted to reading files rather than executing tasks"
+      ]
+    },
+    {
+      "concept": "cloud-vs-computer",
+      "prompt": "You close your laptop in the middle of a remote Cowork session. What happens to the task?",
+      "choices": [
+        "It dies instantly",
+        "It pauses until you reopen the laptop",
+        "Claude keeps working — remote sessions run on Anthropic's servers, not your machine",
+        "It silently restarts from the beginning"
+      ],
+      "correct": 2,
+      "reteach": "Remote sessions run on Anthropic's servers in an isolated environment, so work continues even when your computer is closed.",
+      "hardChoices": [
+        "It keeps running only while the Claude Desktop app stays open in the background",
+        "It checkpoints and resumes exactly where it stopped when you reopen the laptop",
+        "It continues, but any step that needs a connector is skipped until you return"
+      ]
+    },
+    {
+      "concept": "cloud-vs-computer",
+      "prompt": "When a Cowork session on your desktop needs to execute code locally, where does that code run?",
+      "choices": [
+        "Directly in your operating system with full access",
+        "In an isolated virtual machine on your device",
+        "On Anthropic staff computers",
+        "It refuses to ever run code locally"
+      ],
+      "correct": 1,
+      "reteach": "Local code execution happens inside an isolated virtual machine on your device, walled off from the rest of your system.",
+      "hardChoices": [
+        "In a sandboxed session on Anthropic's cloud servers, never on your device",
+        "Inside the Claude Desktop app's own process, using the app's permissions",
+        "In the browser's JavaScript sandbox, the same way artifacts run"
+      ]
+    },
+    {
+      "concept": "file-handling",
+      "prompt": "Claude needs to edit files on your computer during a Cowork task. What determines what it can access?",
+      "choices": [
+        "It can browse your entire hard drive by default",
+        "Only files you attach one at a time in chat",
+        "Whatever was accessed in your last session",
+        "Only the folders you've explicitly connected"
+      ],
+      "correct": 3,
+      "reteach": "File access is restricted to connected folders — Claude works directly in those without manual uploads, and touches nothing else.",
+      "hardChoices": [
+        "Any folder on the drive, but it asks permission before each individual file",
+        "The folders you connected plus their parent directories for context",
+        "Whatever folders your project's custom instructions list as allowed"
+      ]
+    },
+    {
+      "concept": "file-handling",
+      "prompt": "A remote session needs a file from a folder you connected on your computer. What must be true for it to reach that file?",
+      "choices": [
+        "Nothing — remote sessions can always reach your disk",
+        "The Claude Desktop app must be open on that computer",
+        "The file must be smaller than a set size limit",
+        "You must retype the file's contents into chat"
+      ],
+      "correct": 1,
+      "reteach": "A remote session reaches your local folders through the Claude Desktop app — it only works while that app is open on your computer.",
+      "hardChoices": [
+        "The folder must finish syncing to Anthropic's cloud before the session starts",
+        "Connected folders mirror to remote sessions automatically — nothing extra needed",
+        "You must approve the request from your phone each time the session asks"
+      ]
+    },
+    {
+      "concept": "delegation",
+      "prompt": "You have a big research-and-report job. The Micromanager insists you feed Claude one tiny step at a time. What does Cowork actually support?",
+      "choices": [
+        "Step-by-step spoon-feeding is the only way it works",
+        "Describing the desired outcome and letting Claude plan and execute the steps",
+        "Delegation, but only for coding tasks",
+        "Only tasks that finish within one reply"
+      ],
+      "correct": 1,
+      "reteach": "Cowork is built for delegation — describe the outcome you want and Claude tackles the multi-step work autonomously.",
+      "hardChoices": [
+        "Outcome delegation, but each subtask still needs your approval before it starts",
+        "It plans all the steps for you, but you carry out each one yourself",
+        "Full delegation, but only inside a project with custom instructions set up"
+      ]
+    },
+    {
+      "concept": "delegation",
+      "prompt": "How does Cowork handle a complex job with several independent parts?",
+      "choices": [
+        "Strictly one part at a time, always",
+        "It refuses jobs with more than one part",
+        "It makes you open a separate chat per part",
+        "It can divide the work into subtasks and run parallel workstreams"
+      ],
+      "correct": 3,
+      "reteach": "Cowork coordinates sub-agents — complex work gets split into smaller tasks that can run in parallel for faster results.",
+      "hardChoices": [
+        "It runs parts in parallel, but only if you open a separate session for each",
+        "It handles every part, but strictly in the order you listed them",
+        "Parallel workstreams exist, but only for coding jobs in Claude Code"
+      ]
+    },
+    {
+      "concept": "task-tracking",
+      "prompt": "You delegated a task and walked away from your desk. How can you learn it finished?",
+      "choices": [
+        "You can't — you must watch the screen the whole time",
+        "By reading raw server logs",
+        "A push notification on your phone when it's done or Claude needs your go-ahead",
+        "Tasks never complete while you're away"
+      ],
+      "correct": 2,
+      "reteach": "Claude can notify your phone when a task finishes or needs approval — you don't have to babysit the screen.",
+      "hardChoices": [
+        "A daily email digest summarizing every session's progress",
+        "The finished work waits unsent until you come back and confirm delivery",
+        "Keep the mobile app open in the foreground — progress only shows live"
+      ]
+    },
+    {
+      "concept": "task-tracking",
+      "prompt": "Where do you find your running and completed Cowork tasks?",
+      "choices": [
+        "The tasks list in the sidebar",
+        "A hidden configuration file",
+        "Only by asking support",
+        "They aren't viewable anywhere"
+      ],
+      "correct": 0,
+      "reteach": "The sidebar's tasks list shows your tasks — and Claude messages you the outcome rather than narrating every step.",
+      "hardChoices": [
+        "In a tasks.json file Claude maintains inside your connected folder",
+        "Only in the Claude Desktop app — web and mobile can't display tasks",
+        "In each project's custom instructions panel"
+      ]
+    },
+    {
+      "concept": "connectors-in-cowork",
+      "prompt": "You want Cowork to pull data from your team's external tools while it works. How?",
+      "choices": [
+        "Copy-paste the data into chat manually every time",
+        "Connectors — Cowork uses the same MCP connectors as the rest of Claude",
+        "Connectors don't function inside Cowork",
+        "Purchase a separate integration product"
+      ],
+      "correct": 1,
+      "reteach": "Cowork supports the same connectors as other Claude products — connect a tool once and Cowork can draw on it mid-task.",
+      "hardChoices": [
+        "Skills — they're the feature that links Claude to external tools",
+        "Reconnect each tool inside Cowork — chat connectors don't carry over",
+        "Export the data into a connected folder first; Cowork reads only local files"
+      ]
+    },
+    {
+      "concept": "connectors-in-cowork",
+      "prompt": "Which of these can extend what Cowork is able to do?",
+      "choices": [
+        "Connectors, skills, and plugins",
+        "Only connectors, nothing else",
+        "Nothing — Cowork's abilities are fixed",
+        "Only features you code yourself"
+      ],
+      "correct": 0,
+      "reteach": "Cowork is extensible with connectors for your tools, skills for reusable workflows, and plugins that bundle both.",
+      "hardChoices": [
+        "Connectors and skills, but plugins only work in Claude Code",
+        "Skills and plugins, but connectors stay a chat-only feature",
+        "Plugins alone — connectors and skills were folded into them"
+      ]
+    },
+    {
+      "concept": "outputs",
+      "prompt": "Your boss wants a real deliverable, not a wall of chat text. What can Cowork hand back?",
+      "choices": [
+        "Plain text only",
+        "Only images and screenshots",
+        "Only source code",
+        "Polished files — Excel spreadsheets with working formulas, PowerPoint decks, formatted documents"
+      ],
+      "correct": 3,
+      "reteach": "Cowork produces professional outputs: spreadsheets with functional formulas, presentations, and formatted documents.",
+      "hardChoices": [
+        "Formatted markdown you export to Office apps yourself",
+        "Spreadsheets and decks, but formulas arrive as static pasted values",
+        "Real files, but only written into connected folders, never delivered in chat"
+      ]
+    },
+    {
+      "concept": "scheduled-tasks-basics",
+      "prompt": "You need a report compiled every Monday morning without asking for it each week. Best approach?",
+      "choices": [
+        "Set a personal alarm and prompt Claude manually",
+        "Leave one chat window open forever",
+        "A scheduled task that runs automatically on a cadence",
+        "It can't be done in Cowork"
+      ],
+      "correct": 2,
+      "reteach": "Scheduled tasks let Claude run recurring work automatically on the cadence you choose — no weekly re-prompting.",
+      "hardChoices": [
+        "A project whose instructions tell Claude to run the report each Monday",
+        "A saved prompt template you re-send — Cowork can't start work unprompted",
+        "A recurring task, but you must open the app Monday to let it trigger"
+      ]
+    },
+    {
+      "concept": "scheduled-tasks-basics",
+      "prompt": "Your computer is asleep when a scheduled task's time arrives. What happens?",
+      "choices": [
+        "It runs anyway — scheduled tasks run remotely",
+        "It's skipped and never retried",
+        "It waits for your computer to wake up",
+        "The schedule gets deleted"
+      ],
+      "correct": 0,
+      "reteach": "Scheduled tasks run remotely, so they fire on schedule even when your computer is asleep or the app is closed.",
+      "hardChoices": [
+        "It runs only if the Claude Desktop app was left open before sleep",
+        "It runs remotely, but results are held until your computer comes back online",
+        "It's rescheduled to the same time the next day automatically"
+      ]
+    },
+    {
+      "concept": "scheduled-tasks-basics",
+      "prompt": "After creating a scheduled task, how much control do you keep over it?",
+      "choices": [
+        "None — it runs unchanged forever",
+        "You can pause, edit, run it on demand, review past runs, or delete it",
+        "You can only delete it by contacting support",
+        "You can rename it but nothing else"
+      ],
+      "correct": 1,
+      "reteach": "Scheduled tasks stay under your control — edit the instructions or cadence, pause, run on demand, review runs, or delete.",
+      "hardChoices": [
+        "You can pause or delete it, but instructions are locked once created",
+        "You can edit and pause it, but past runs aren't kept for review",
+        "Full control, except changing the cadence requires recreating the task"
+      ]
+    },
+    {
+      "concept": "safety-basics",
+      "prompt": "You're picking a local folder to connect for a Cowork task. Which choice should give you pause?",
+      "choices": [
+        "A dedicated working folder made for the task",
+        "An empty scratch folder",
+        "A folder of public press releases",
+        "A folder holding financial documents and credentials"
+      ],
+      "correct": 3,
+      "reteach": "Be selective with folder access — keep financial documents, credentials, and personal records out; a dedicated working folder is safest.",
+      "hardChoices": [
+        "A folder with thousands of files — too large for Claude to handle safely",
+        "A folder Claude already wrote outputs to in a previous session",
+        "A shared team folder of published meeting notes"
+      ]
+    },
+    {
+      "concept": "projects-in-cowork",
+      "prompt": "You run several recurring workstreams that need different rules and context. How do projects in Cowork help?",
+      "choices": [
+        "They only change the visual theme",
+        "They merge all memory into one shared pool",
+        "Each project groups related tasks with its own instructions, context, and memory",
+        "They disable connectors for safety"
+      ],
+      "correct": 2,
+      "reteach": "Projects are dedicated workspaces with their own instructions, context, and memory — what Claude learns in one project doesn't carry to others.",
+      "hardChoices": [
+        "They group tasks visually, but instructions still apply account-wide",
+        "They store files and connectors per project, while memory stays global",
+        "They sync learned context across projects so nothing is repeated"
+      ]
+    }
+  ],
+  "petName": "Chewie",
+  "petGender": "m"
+}

@@ -1,0 +1,21 @@
+{
+  "locked": "2026-07-16",
+  "provenance": "ALL audio is runtime-synthesized Web Audio (src/logic/audio.ts). No sampled/sourced audio files anywhere — creator owns every sound outright (commercial-sale requirement, no licensing exposure).",
+  "waveform_palette": {
+    "square": "leads, UI taps, surge/victory jingles, beams",
+    "triangle": "music bass voice, defeat lament",
+    "sine": "chimes: correct/bank/guard/mend/redeem/chest, music sparkle voice",
+    "sawtooth": "danger: wrong/strike/graze/crit/coil/seal/boss hits",
+    "noise_lowpass_sweep": "impacts layered under sawtooth hits"
+  },
+  "key": "A minor home key (creator retune 2026-07-16: 'more fantasy'). Overworld = Am|F|C|G 4-bar phrase, 3 voices (triangle bass d2.2 / sine harp arpeggio d1.4 / triangle lead d1.8 — notes ring past the step grid). Battle = Am ostinato with Bb (b2) menace lean. Celebration = C major fanfare-lyric.",
+  "tempo": { "overworld_stepMs": 240, "battle_stepMs": 185, "celebration_stepMs": 170 },
+  "mix": { "sfx_vol": "0.2-0.6 by weight; UI clicks SOFT (creator retune): uiTap triangle 660Hz v0.1, blip sine 587Hz v0.09", "music_vol": "0.085-0.12 (must never mask SFX)" },
+  "preview": "render_music.mjs offline-renders all tracks to WAV (mirrors audio.ts synthesis) — regenerate for creator sign-off whenever a track changes",
+  "rules": [
+    "initAudio() only from a real user gesture (main.ts once-listeners)",
+    "mute toggle visible in every scene (addMuteBtn), persisted as save.muted",
+    "good outcomes = sine/square ascending; bad outcomes = sawtooth descending + noise; NEVER invert this grammar",
+    "zone transposition via ZONE_MULT pentatonic roots — new zones reuse the overworld pattern, never a new track per zone"
+  ]
+}

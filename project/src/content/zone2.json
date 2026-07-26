@@ -1,0 +1,378 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "hall-of-memory",
+  "zoneName": "Hall of Memory",
+  "discipline": "Projects, Memory & Artifacts",
+  "bossName": "The Amnesiac",
+  "misconception": "Every chat starts from nothing — Claude can never remember or persist anything.",
+  "sources": [
+    "https://support.claude.com/en/articles/9517075-what-are-projects",
+    "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects",
+    "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
+    "https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude",
+    "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them",
+    "https://support.claude.com/en/articles/9547008-publish-and-share-artifacts"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "projects-what",
+      "npc": "Keeper Elowen",
+      "line": "A Project is a self-contained workspace — its own chats, its own knowledge base — one home for everything a piece of work needs."
+    },
+    {
+      "concept": "projects-instructions",
+      "npc": "Keeper Elowen",
+      "line": "Set project instructions once and every chat inside that Project follows them — tone, role, rules — no repeating yourself."
+    },
+    {
+      "concept": "projects-docs",
+      "npc": "Keeper Elowen",
+      "line": "Anything shelved in a Project's knowledge base serves every chat inside it — but chats don't read each other; only the shelf is shared."
+    },
+    {
+      "concept": "memory-auto",
+      "npc": "Keeper Elowen",
+      "line": "Claude quietly distills your chat history into a synthesis of key insights — who you are, what you're working on — and carries it into new conversations."
+    },
+    {
+      "concept": "memory-control",
+      "npc": "Keeper Elowen",
+      "line": "Memory is yours to govern — view it, edit it, pause it, or reset it entirely from your settings."
+    },
+    {
+      "concept": "memory-incognito",
+      "npc": "Keeper Elowen",
+      "line": "An incognito chat leaves no trace — it is saved neither to memory nor to your chat history."
+    },
+    {
+      "concept": "memory-scope",
+      "npc": "Keeper Elowen",
+      "line": "Each Project keeps its own separate memory space, so what Claude learns in one Project never bleeds into another."
+    },
+    {
+      "concept": "artifacts-what",
+      "npc": "Keeper Elowen",
+      "line": "When content is substantial and standalone — a document, code, a diagram, an interactive page — Claude sets it in its own dedicated window: an artifact."
+    },
+    {
+      "concept": "artifacts-persistence",
+      "npc": "Keeper Elowen",
+      "line": "Artifacts keep versions you can flip between, can be downloaded, and can be published so anyone with the link may use them — but once unpublished, that same artifact can't be published again."
+    },
+    {
+      "concept": "when-to-use-which",
+      "npc": "Keeper Elowen",
+      "line": "Instructions shape how Claude behaves, knowledge is what it consults, memory is what it recalls about you, and artifacts are what it builds for you."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "projects-what",
+      "prompt": "You're starting a months-long redesign with lots of recurring context. What's the right container for the work?",
+      "choices": [
+        "One very long chat you never close",
+        "A new chat each day, re-pasting the context",
+        "A Project — a workspace with its own chats and knowledge base",
+        "Nothing — context can never persist between chats"
+      ],
+      "correct": 2,
+      "reteach": "A Project is a self-contained workspace whose chats and knowledge base stay together across the whole effort.",
+      "hardChoices": [
+        "Claude's memory — it stores full context so no workspace is needed",
+        "A single artifact that every future chat automatically reads",
+        "Custom instructions in settings — they hold project context globally"
+      ]
+    },
+    {
+      "concept": "projects-what",
+      "prompt": "What actually lives inside a Project?",
+      "choices": [
+        "Its own chat history plus a shared knowledge base",
+        "Only a single pinned chat",
+        "Just bookmarks pointing to chats elsewhere",
+        "Nothing persistent — Projects are purely cosmetic folders"
+      ],
+      "correct": 0,
+      "reteach": "A Project holds its own chats and its own knowledge base — a genuine workspace, not a label.",
+      "hardChoices": [
+        "A single continuous chat that all project work shares",
+        "Chats that automatically read each other's full context",
+        "A knowledge base only — chats stay outside the Project"
+      ]
+    },
+    {
+      "concept": "projects-instructions",
+      "prompt": "You want Claude to always answer as a cautious legal reviewer in every chat about one contract job. Best move?",
+      "choices": [
+        "Retype the role at the start of every chat",
+        "Set project instructions — they apply to all chats in that Project",
+        "Say it in one chat and trust the others to notice",
+        "Rename the Project to 'cautious legal reviewer'"
+      ],
+      "correct": 1,
+      "reteach": "Project instructions are applied to every chat inside that Project, so a role or tone only needs stating once.",
+      "hardChoices": [
+        "Ask Claude to memorize the role — memory applies it to every chat",
+        "Upload the role as a document to the project knowledge base",
+        "State it once in any Project chat — the others share its context"
+      ]
+    },
+    {
+      "concept": "projects-instructions",
+      "prompt": "Project instructions affect...",
+      "choices": [
+        "Only the first chat created after you save them",
+        "Every chat in every Project you own",
+        "Nothing unless memory is also switched on",
+        "Every chat inside that one Project"
+      ],
+      "correct": 3,
+      "reteach": "Project instructions are scoped to their own Project — all its chats, and only its chats.",
+      "hardChoices": [
+        "Every chat in that Project plus any chats you start outside it",
+        "Only new chats created after saving — earlier chats never see them",
+        "Every chat, but only while a copy sits in the knowledge base"
+      ]
+    },
+    {
+      "concept": "projects-docs",
+      "prompt": "You upload a style guide to a Project's knowledge base. Which chats can use it?",
+      "choices": [
+        "Only the chat that was open during the upload",
+        "All chats within that Project",
+        "Every chat everywhere, even outside the Project",
+        "None, until you also paste it into each chat"
+      ],
+      "correct": 1,
+      "reteach": "Anything uploaded to a Project's knowledge base is used across all of the chats within that Project.",
+      "hardChoices": [
+        "Only chats created after the upload, not earlier ones",
+        "Any chat, once memory has summarized the guide into your profile",
+        "All chats in that Project, but only if instructions cite the file"
+      ]
+    },
+    {
+      "concept": "projects-docs",
+      "prompt": "Where should reference documents go so Claude can consult them in every chat of a Project?",
+      "choices": [
+        "Pasted into every new chat by hand",
+        "Into Claude's memory, by asking it to memorize them verbatim",
+        "Uploaded to the Project's knowledge base",
+        "Into the Project's title and description"
+      ],
+      "correct": 2,
+      "reteach": "The knowledge base is the Project's shelf — upload documents there and every chat in the Project can draw on them.",
+      "hardChoices": [
+        "Pasted into the project instructions as full document text",
+        "Attached to one chat — Project chats share uploads automatically",
+        "Saved as an artifact so every chat can reference it"
+      ]
+    },
+    {
+      "concept": "projects-docs",
+      "prompt": "In Chat A inside a Project you worked out a naming scheme. Will Chat B in the same Project automatically know it?",
+      "choices": [
+        "Yes — all chats in a Project share full context automatically",
+        "Only if Chat B was created after Chat A",
+        "No — chats don't share context unless the information is added to the project knowledge base",
+        "No, and there is no way to share it at all"
+      ],
+      "correct": 2,
+      "reteach": "Chats in a Project stay separate — to share something between them, add it to the project knowledge base.",
+      "hardChoices": [
+        "Yes — project memory syncs decisions between chats in real time",
+        "Yes — the knowledge base captures chat decisions automatically",
+        "No — and Project memory can't carry anything between chats either"
+      ]
+    },
+    {
+      "concept": "memory-auto",
+      "prompt": "How does Claude's memory get its content?",
+      "choices": [
+        "Claude automatically summarizes your conversations into a synthesis of key insights",
+        "You must type every memory in by hand",
+        "It scans the files on your device",
+        "It can't — every chat starts from absolute nothing"
+      ],
+      "correct": 0,
+      "reteach": "Memory builds itself: Claude summarizes your chat history into key insights that inform new conversations.",
+      "hardChoices": [
+        "It stores full transcripts of every past conversation",
+        "It pulls from documents uploaded to your Projects' knowledge bases",
+        "It only saves details you explicitly tell Claude to remember"
+      ]
+    },
+    {
+      "concept": "memory-auto",
+      "prompt": "What kind of things does Claude's memory tend to hold?",
+      "choices": [
+        "Verbatim transcripts of every chat you've ever had",
+        "Your account password and payment details",
+        "Only what was said within the current conversation",
+        "Your role, projects, preferences, and working style — work-focused context"
+      ],
+      "correct": 3,
+      "reteach": "Memory is a work-focused synthesis — role, projects, and preferences — not a verbatim transcript archive.",
+      "hardChoices": [
+        "A condensed but complete log of each chat, kept chat-by-chat",
+        "Everything in your Projects' knowledge bases, synced automatically",
+        "Only preferences you explicitly asked Claude to remember"
+      ]
+    },
+    {
+      "concept": "memory-control",
+      "prompt": "Claude's memory holds something about your workflow that's now outdated. What can you do?",
+      "choices": [
+        "Nothing — memory is permanent and read-only",
+        "View and edit the memory in settings, or ask Claude to update it",
+        "Delete your whole account — it's the only way",
+        "Wait for the memory to expire on its own"
+      ],
+      "correct": 1,
+      "reteach": "You can view and edit everything Claude remembers about you in settings, or simply ask Claude to change it.",
+      "hardChoices": [
+        "Export memory, edit the file, and re-import — the only way to change it",
+        "Manage it from inside an incognito chat, where memory is edited",
+        "Reset memory entirely — individual details can't be changed"
+      ]
+    },
+    {
+      "concept": "memory-control",
+      "prompt": "You want Claude to keep what it already knows about you but stop adding anything new. Which control fits?",
+      "choices": [
+        "Pause memory — existing memories stay, but no new ones are added",
+        "Reset memory — pausing and resetting are the same thing",
+        "Start an incognito chat — that permanently changes memory settings",
+        "No such control exists"
+      ],
+      "correct": 0,
+      "reteach": "Pausing memory freezes it — existing memories remain usable while nothing new is recorded; reset is the separate, permanent wipe.",
+      "hardChoices": [
+        "Pause memory — but paused memories are hidden until you resume",
+        "Use incognito for every chat — it keeps old memories applying",
+        "Edit the memory summary and add a note telling Claude to stop"
+      ]
+    },
+    {
+      "concept": "memory-incognito",
+      "prompt": "You need a one-off conversation that leaves no trace in memory or chat history. What do you use?",
+      "choices": [
+        "A regular chat — just delete one message afterwards",
+        "A brand-new Project with no documents",
+        "An incognito chat",
+        "Impossible — everything is always remembered forever"
+      ],
+      "correct": 2,
+      "reteach": "Incognito chats are saved neither to Claude's memory nor to your chat history — a genuinely traceless conversation.",
+      "hardChoices": [
+        "A chat with memory paused — pausing also hides it from history",
+        "A new Project — its separate memory keeps the chat out of history",
+        "Any chat you delete afterward — deletion also wipes it from memory"
+      ]
+    },
+    {
+      "concept": "memory-scope",
+      "prompt": "You use one Project for marketing and another for engineering. How does memory treat them?",
+      "choices": [
+        "One global memory blends everything from both",
+        "Each project has its own separate memory space and summary",
+        "Only the first-created Project gets any memory",
+        "Using Projects disables memory entirely"
+      ],
+      "correct": 1,
+      "reteach": "Each Project has its own separate memory space, keeping context focused and isolated from other Projects.",
+      "hardChoices": [
+        "Projects share one memory, but instructions keep contexts apart",
+        "Each Project gets separate memory only if you enable it per Project",
+        "Memory stays separate at first but merges into one profile over time"
+      ]
+    },
+    {
+      "concept": "artifacts-what",
+      "prompt": "You ask Claude to build an interactive quiz page. Where does substantial, standalone content like this appear?",
+      "choices": [
+        "Buried inline in the chat text only",
+        "Sent to you as an email attachment",
+        "In an artifact — a dedicated window separate from the main conversation",
+        "Nowhere — Claude can't produce interactive content"
+      ],
+      "correct": 2,
+      "reteach": "Substantial, standalone content becomes an artifact: a dedicated window beside the conversation that you can iterate on and reuse.",
+      "hardChoices": [
+        "In the Project knowledge base, where interactive files are stored",
+        "As a download only — interactive content can't render inside Claude",
+        "Published to a share link first — that's the only way it can run"
+      ]
+    },
+    {
+      "concept": "artifacts-what",
+      "prompt": "Which of these would typically be an artifact?",
+      "choices": [
+        "A single-page HTML site, an SVG diagram, or an interactive React component",
+        "A one-line answer to a quick factual question",
+        "Claude's private reasoning before it replies",
+        "Your memory summary from settings"
+      ],
+      "correct": 0,
+      "reteach": "Artifacts carry substantial standalone work — documents, code, HTML pages, SVGs, diagrams, React components — not quick inline replies.",
+      "hardChoices": [
+        "Project instructions, since they're substantial standalone text",
+        "Any document you upload to a Project's knowledge base",
+        "A Project's chat history, packaged for download"
+      ]
+    },
+    {
+      "concept": "artifacts-persistence",
+      "prompt": "You've iterated an artifact five times and now prefer the second version. Can you get it back?",
+      "choices": [
+        "No — each edit permanently destroys the previous version",
+        "Only by re-prompting the whole thing from scratch",
+        "Only if you had copied it out beforehand",
+        "Yes — use the version selector to switch between versions"
+      ],
+      "correct": 3,
+      "reteach": "Artifacts keep their versions — the version selector lets you switch back to any earlier one.",
+      "hardChoices": [
+        "Yes — but only if the artifact was published before the edits",
+        "Yes — restore it from the Project's knowledge base backup",
+        "Only within the same session — versions vanish when the chat closes"
+      ]
+    },
+    {
+      "concept": "artifacts-persistence",
+      "prompt": "You publish an artifact. Who can open it?",
+      "choices": [
+        "Only you, ever",
+        "Anyone with the link — even people without a Claude account can view and interact",
+        "Only members of the same Project",
+        "Publishing just saves a private backup copy"
+      ],
+      "correct": 1,
+      "reteach": "Publishing makes an artifact publicly available — anyone with the link can view and interact with it, no account required.",
+      "hardChoices": [
+        "Anyone with the link, but they must sign in to a Claude account",
+        "Anyone with the link can view it, but only you can interact",
+        "Anyone in your organization, but no one outside it"
+      ]
+    },
+    {
+      "concept": "when-to-use-which",
+      "prompt": "You want three things: Claude always uses your brand voice in one Project's chats, a brand PDF stays available there, and you get an editable one-page site. Match the tools, in order.",
+      "choices": [
+        "Project instructions, project knowledge base, artifact",
+        "Memory, artifact, incognito chat",
+        "Artifact, memory, project instructions",
+        "One long chat covers all three"
+      ],
+      "correct": 0,
+      "reteach": "Instructions govern behavior in a Project, the knowledge base holds its documents, and artifacts are the standalone things Claude builds.",
+      "hardChoices": [
+        "Project instructions, memory, artifact",
+        "Memory, project knowledge base, artifact",
+        "Project knowledge base, project instructions, artifact"
+      ]
+    }
+  ],
+  "petName": "Choji",
+  "petGender": "m"
+}

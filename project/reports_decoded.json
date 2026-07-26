@@ -1,0 +1,84 @@
+[
+  {
+    "t": "2026-07-26T01:39:59.665Z",
+    "v": "1.0.10",
+    "note": "The boss froze after I used Insight Lance on the second question",
+    "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "screen": "960x540",
+    "scene": "options",
+    "errors": [
+      {
+        "t": "2026-07-26T01:39:56.011Z",
+        "k": "boot",
+        "m": "session start"
+      }
+    ],
+    "save": {
+      "schema": 1,
+      "name": "Castle",
+      "palette": 0,
+      "character": "castle",
+      "outfit": 3,
+      "chose": true,
+      "outfitsUnlocked": 4,
+      "muted": true,
+      "reducedMotion": false,
+      "bigText": false,
+      "journal": {},
+      "companion": "auto",
+      "flags": {},
+      "cleared": [
+        "vestibule"
+      ],
+      "cycle": 0,
+      "highestCycle": 0,
+      "stats": {
+        "answered": 12,
+        "correct": 11,
+        "bossesDown": 1,
+        "finishers": 0,
+        "duels": 0
+      },
+      "log": [],
+      "updatedAt": "x"
+    }
+  },
+  {
+    "t": "2026-07-26T01:39:59.899Z",
+    "v": "1.0.10",
+    "note": "second report: music kept playing after mute",
+    "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "screen": "960x540",
+    "scene": "options",
+    "errors": [],
+    "save": {
+      "schema": 1,
+      "name": "Castle",
+      "palette": 0,
+      "character": "castle",
+      "outfit": 3,
+      "chose": true,
+      "outfitsUnlocked": 4,
+      "muted": true,
+      "reducedMotion": false,
+      "bigText": false,
+      "journal": {},
+      "companion": "auto",
+      "flags": {},
+      "cleared": [
+        "vestibule"
+      ],
+      "cycle": 0,
+      "highestCycle": 0,
+      "stats": {
+        "answered": 12,
+        "correct": 11,
+        "bossesDown": 1,
+        "finishers": 0,
+        "duels": 0
+      },
+      "log": [],
+      "updatedAt": "x"
+    }
+  }
+]

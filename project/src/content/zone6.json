@@ -1,0 +1,377 @@
+{
+  "contentVersion": "2026-07-16.2",
+  "zoneId": "codeforge",
+  "zoneName": "The Codeforge",
+  "discipline": "Claude Code",
+  "bossName": "The Lone Coder",
+  "misconception": "Real developers do everything by hand — an agent in your codebase is a gimmick.",
+  "sources": [
+    "https://code.claude.com/docs/en/overview",
+    "https://code.claude.com/docs/en/quickstart",
+    "https://code.claude.com/docs/en/memory",
+    "https://code.claude.com/docs/en/permissions",
+    "https://code.claude.com/docs/en/permission-modes",
+    "https://code.claude.com/docs/en/commands",
+    "https://code.claude.com/docs/en/sub-agents",
+    "https://code.claude.com/docs/en/hooks-guide",
+    "https://code.claude.com/docs/en/mcp",
+    "https://code.claude.com/docs/en/common-workflows"
+  ],
+  "mentorLessons": [
+    {
+      "concept": "what-claude-code",
+      "npc": "Forgemaster Edda",
+      "line": "Claude Code isn't a chat window — it's an agent at your anvil. It reads your codebase, edits files, and runs commands itself, working across many files to get things done."
+    },
+    {
+      "concept": "core-loop",
+      "npc": "Forgemaster Edda",
+      "line": "Learn the rhythm of the forge: it finds the right files, shows you the proposed change, asks your approval, then strikes. You remain the master — it swings the hammer."
+    },
+    {
+      "concept": "claude-md",
+      "npc": "Forgemaster Edda",
+      "line": "A CLAUDE.md at the project root is read at the start of every session. Write down what you'd otherwise re-explain — build commands, conventions, rules — and keep it specific and concise."
+    },
+    {
+      "concept": "permissions-plan-mode",
+      "npc": "Forgemaster Edda",
+      "line": "Permission modes set how often the agent pauses for your word. In plan mode it only reads and proposes — nothing touches your files until you approve the plan."
+    },
+    {
+      "concept": "slash-commands",
+      "npc": "Forgemaster Edda",
+      "line": "A slash commands the session itself: /clear for an empty context, /compact to summarize and free space, /permissions to set the rules, /resume to pick up an old thread."
+    },
+    {
+      "concept": "subagents",
+      "npc": "Forgemaster Edda",
+      "line": "When a side-quest would flood your main conversation with search results, send a subagent. It works in its own context window and returns only the summary."
+    },
+    {
+      "concept": "hooks",
+      "npc": "Forgemaster Edda",
+      "line": "Instructions shape behavior; hooks guarantee it. A hook is a shell command that always runs at a lifecycle point — format after every edit, or block a forbidden file before it's touched."
+    },
+    {
+      "concept": "mcp-in-code",
+      "npc": "Forgemaster Edda",
+      "line": "MCP connects the forge to the outside world — issue trackers, databases, design tools — so Claude acts on them directly instead of working from what you paste. But verify you trust each server first."
+    },
+    {
+      "concept": "git-workflow",
+      "npc": "Forgemaster Edda",
+      "line": "Speak git in plain words — 'commit my changes,' 'create a PR.' And when two tasks must run at once, give each session its own worktree so the edits never collide."
+    }
+  ],
+  "questions": [
+    {
+      "concept": "what-claude-code",
+      "prompt": "A veteran on your team scoffs: \"An AI in the codebase is just autocomplete with extra steps.\" What actually sets Claude Code apart from a chat assistant?",
+      "choices": [
+        "It only suggests snippets that you paste in yourself",
+        "It's mainly a faster search engine for documentation",
+        "It's agentic — it reads your codebase, edits files, and runs commands itself",
+        "It replaces version control entirely"
+      ],
+      "correct": 2,
+      "reteach": "Claude Code is an agentic coding tool: it reads your codebase, edits files, and runs commands itself — not just a text suggester.",
+      "hardChoices": [
+        "It's a chat assistant with a bigger context window for pasted code",
+        "It autocompletes lines in your editor as you type, like an IDE plugin",
+        "It runs your code in a cloud sandbox so nothing executes on your machine"
+      ]
+    },
+    {
+      "concept": "what-claude-code",
+      "prompt": "You launch Claude Code inside a huge unfamiliar repo and ask \"what does this project do?\" Do you have to paste files in first?",
+      "choices": [
+        "No — it reads your project files as needed; you don't manually add context",
+        "Yes — it can only see text you paste into the chat",
+        "Yes — but only files shorter than a screen",
+        "No — but only if the repo has no subfolders"
+      ],
+      "correct": 0,
+      "reteach": "Claude Code reads your project files as needed — you don't have to manually feed it context.",
+      "hardChoices": [
+        "No — but only files referenced in CLAUDE.md are loaded automatically",
+        "Yes — you must add each folder with /add-dir before files are readable",
+        "No — but each file read needs manual approval unless you exit plan mode"
+      ]
+    },
+    {
+      "concept": "core-loop",
+      "prompt": "You ask Claude Code to \"add input validation to the signup form.\" What's the standard flow before anything changes on disk?",
+      "choices": [
+        "It edits silently and mentions it afterward",
+        "It finds the file, shows the proposed changes, asks for approval, then makes the edit",
+        "It mails you a patch to apply by hand",
+        "It refuses until you write the code yourself"
+      ],
+      "correct": 1,
+      "reteach": "The loop is: find the right file, show proposed changes, ask your approval, then edit — you stay in control.",
+      "hardChoices": [
+        "It switches into plan mode automatically for any request that edits files",
+        "It edits right away — approval prompts only apply to bash commands",
+        "A PreToolUse hook must approve the edit before Claude is allowed to act"
+      ]
+    },
+    {
+      "concept": "core-loop",
+      "prompt": "You're about to attempt a major change in a system you barely understand. Per the docs, the strongest opening move is to...",
+      "choices": [
+        "Type the change request fast before the context fills up",
+        "Turn off all permission prompts so nothing interrupts",
+        "Ask for the entire app to be rewritten in one prompt",
+        "Let Claude explore first — start with broad questions about the code, then narrow down"
+      ],
+      "correct": 3,
+      "reteach": "Let Claude analyze and understand the code first — broad questions, then narrow — before asking for changes.",
+      "hardChoices": [
+        "Write the full plan into CLAUDE.md yourself before opening the session",
+        "Hand the whole change to a subagent so your main context stays clean",
+        "Switch to acceptEdits so exploration isn't slowed by approval prompts"
+      ]
+    },
+    {
+      "concept": "claude-md",
+      "prompt": "Every session you re-explain the same three things: the build command, the test command, and \"never touch the legacy folder.\" What's the documented fix?",
+      "choices": [
+        "Put them in a CLAUDE.md at the project root — it's read at the start of every session",
+        "Keep re-typing them; there's no persistence mechanism",
+        "Hide the legacy folder so it can't be found",
+        "Bury them in a code comment and hope"
+      ],
+      "correct": 0,
+      "reteach": "CLAUDE.md holds persistent instructions Claude reads at the start of every session — write down what you'd otherwise re-explain.",
+      "hardChoices": [
+        "Add them to README.md — Claude reads it at the start of every session",
+        "Save them as a custom slash command and run it at each session start",
+        "Add them as permission rules in settings so they're always enforced"
+      ]
+    },
+    {
+      "concept": "claude-md",
+      "prompt": "Which of these belongs in a well-written CLAUDE.md, going by the docs' guidance on specificity?",
+      "choices": [
+        "\"Format code properly\"",
+        "\"Be careful with important files\"",
+        "\"Run npm test before committing\"",
+        "\"Write good code\""
+      ],
+      "correct": 2,
+      "reteach": "Write instructions concrete enough to verify — 'Run npm test before committing' beats vague advice like 'test your changes.'",
+      "hardChoices": [
+        "\"Use clean code principles throughout the project\"",
+        "\"A full architecture overview copied in from the README\"",
+        "\"A changelog of every past Claude Code session\""
+      ]
+    },
+    {
+      "concept": "permissions-plan-mode",
+      "prompt": "You want Claude to research a risky refactor and lay out its whole approach — but not touch a single source file until you've read the proposal. Which mode?",
+      "choices": [
+        "acceptEdits — it reviews changes after the fact",
+        "Plan mode — Claude reads and explores but doesn't edit until you approve the plan",
+        "bypassPermissions — fastest is safest",
+        "No such mode exists; you must watch every keystroke"
+      ],
+      "correct": 1,
+      "reteach": "Plan mode tells Claude to research and propose changes without making them — edits stay blocked until you approve the plan.",
+      "hardChoices": [
+        "acceptEdits — edits are proposed but held until you end the session",
+        "A deny rule on the Edit tool — that's what plan mode is under the hood",
+        "Delegate it to the Explore subagent — research always happens there"
+      ]
+    },
+    {
+      "concept": "permissions-plan-mode",
+      "prompt": "A settings rule denies \"git push\", but your prompt tells Claude \"you're totally allowed to push.\" What happens when it tries?",
+      "choices": [
+        "The prompt wins — instructions override settings",
+        "The conflict makes the session halt with an error",
+        "Claude gains push access for one command only",
+        "The deny rule wins — permission rules are enforced by Claude Code itself, not by what the model is told"
+      ],
+      "correct": 3,
+      "reteach": "Permission rules are enforced by Claude Code, not the model — prompts and CLAUDE.md shape what Claude tries, not what's allowed.",
+      "hardChoices": [
+        "CLAUDE.md instructions can override settings rules, but prompts cannot",
+        "Claude Code asks you to confirm, since the prompt and settings disagree",
+        "The deny rule only applies in plan mode, so the push goes through"
+      ]
+    },
+    {
+      "concept": "slash-commands",
+      "prompt": "You finished one task and are starting a completely unrelated one, but the context is stuffed with the old work. Cheapest reset?",
+      "choices": [
+        "/clear — start a new conversation with empty context",
+        "/compact — it deletes the conversation entirely",
+        "/resume — it wipes the current session",
+        "/model — a new model means a fresh context"
+      ],
+      "correct": 0,
+      "reteach": "/clear starts a fresh conversation with empty context; /compact instead summarizes so you can continue the same task with more room.",
+      "hardChoices": [
+        "/compact — it summarizes the old task so the new one starts clean",
+        "/resume — starting a resumed thread flushes the current context",
+        "Quit and relaunch the CLI — context can't be emptied mid-session"
+      ]
+    },
+    {
+      "concept": "slash-commands",
+      "prompt": "Your team repeats the same multi-step code-review workflow constantly. How do you turn it into a one-liner like /review-pr?",
+      "choices": [
+        "You can't — only built-in commands exist",
+        "File a feature request and wait for Anthropic to build it",
+        "Create a custom skill — a markdown file your team can share, invoked with a slash",
+        "Write a separate wrapper program around the CLI"
+      ],
+      "correct": 2,
+      "reteach": "Custom slash commands are skills — shareable markdown files that package a repeatable workflow, like /review-pr.",
+      "hardChoices": [
+        "Register a hook that fires whenever you type /review-pr",
+        "Add the steps to CLAUDE.md — headings there become slash commands",
+        "Create a subagent named review-pr — subagents are invoked with a slash"
+      ]
+    },
+    {
+      "concept": "subagents",
+      "prompt": "Answering one question means sweeping hundreds of files, and you don't want search dumps drowning your main conversation. The docs-recommended move?",
+      "choices": [
+        "Paste every file in manually and scroll",
+        "Delegate to a subagent — it explores in its own context window and returns only the summary",
+        "Ask the same question repeatedly until it sticks",
+        "Disable file reading to keep the context small"
+      ],
+      "correct": 1,
+      "reteach": "A subagent does the heavy exploration in its own context and reports back just the findings, keeping your main conversation clean.",
+      "hardChoices": [
+        "Run /compact between searches so the dumps keep getting summarized",
+        "Use plan mode — file reads there don't consume the main context",
+        "Add a PostToolUse hook that strips search output from the context"
+      ]
+    },
+    {
+      "concept": "subagents",
+      "prompt": "Which of these is true of the built-in Explore subagent?",
+      "choices": [
+        "It edits files as it searches to save time",
+        "It requires a separate subscription to enable",
+        "It replaces the main conversation once launched",
+        "It's read-only — built for searching and analyzing code, with write and edit denied"
+      ],
+      "correct": 3,
+      "reteach": "Explore is a fast read-only subagent for searching and analyzing codebases — its write and edit tools are denied.",
+      "hardChoices": [
+        "It can edit, but each edit is escalated to the main session for approval",
+        "It's read-only because it always runs in plan mode by default",
+        "It's a slash command — run /explore to sweep the codebase"
+      ]
+    },
+    {
+      "concept": "hooks",
+      "prompt": "You want your formatter to run after every single file edit — guaranteed, not \"hopefully remembered.\" Which mechanism?",
+      "choices": [
+        "A PostToolUse hook — hooks run deterministically at lifecycle events",
+        "A polite request in CLAUDE.md",
+        "Reminding Claude at the start of each session",
+        "A subagent that watches for edits"
+      ],
+      "correct": 0,
+      "reteach": "Hooks are shell commands that always execute at lifecycle points — a PostToolUse hook guarantees formatting after edits, no reliance on the model choosing to.",
+      "hardChoices": [
+        "A PreToolUse hook — it fires right after the edit completes",
+        "A CLAUDE.md rule — memory files are re-read after every edit",
+        "A formatter subagent that watches the main agent's edits"
+      ]
+    },
+    {
+      "concept": "hooks",
+      "prompt": "How can a PreToolUse hook protect a sensitive file like .env from being modified?",
+      "choices": [
+        "It can't — hooks can only log what happened",
+        "It hides the file from directory listings only",
+        "The hook script can block the edit before it runs, and Claude receives feedback explaining why",
+        "It encrypts the file when Claude approaches"
+      ],
+      "correct": 2,
+      "reteach": "A PreToolUse hook runs before the action and can block it — Claude gets an explanation of why, so it adjusts its approach.",
+      "hardChoices": [
+        "It can only block edits if plan mode is also active in the session",
+        "It can warn Claude, but only a permission rule can actually block a tool",
+        "It blocks the edit silently — Claude never learns why the write failed"
+      ]
+    },
+    {
+      "concept": "mcp-in-code",
+      "prompt": "You keep copy-pasting Jira tickets and database rows into your Claude Code session. What's the documented better way?",
+      "choices": [
+        "Keep pasting — that's the intended workflow",
+        "Connect those tools via MCP so Claude can read and act on them directly",
+        "Retype the tickets into a text file first",
+        "Only work from screenshots of the other tools"
+      ],
+      "correct": 1,
+      "reteach": "MCP servers connect Claude Code to external tools like issue trackers and databases, so it acts on them directly instead of on what you paste.",
+      "hardChoices": [
+        "List the Jira URLs in CLAUDE.md so Claude refetches them every session",
+        "Add a hook that injects the ticket text into each prompt automatically",
+        "Spawn a subagent — only subagents can reach tools outside the repo"
+      ]
+    },
+    {
+      "concept": "mcp-in-code",
+      "prompt": "Before connecting a third-party MCP server, the docs specifically warn you to...",
+      "choices": [
+        "Verify you trust it first — servers that fetch external content can expose you to prompt injection risk",
+        "Do nothing special — every MCP server is vetted by Anthropic",
+        "Grant it full permissions immediately so it works",
+        "Delete your CLAUDE.md so instructions can't conflict"
+      ],
+      "correct": 0,
+      "reteach": "Verify you trust each MCP server before connecting — servers that fetch external content can carry prompt injection risk.",
+      "hardChoices": [
+        "Enable plan mode first — MCP tools can't run until a plan is approved",
+        "Confirm it's in an official registry — listed servers are pre-vetted",
+        "Deny its tools in CLAUDE.md until you have tested each one yourself"
+      ]
+    },
+    {
+      "concept": "git-workflow",
+      "prompt": "Feature work in one terminal, a bug fix in another — same repo, two Claude sessions. How do you keep their edits from colliding?",
+      "choices": [
+        "You can't run two sessions on one repo",
+        "Have both edit the main branch and merge by luck",
+        "Run each session in its own git worktree — separate checkouts on their own branches",
+        "Turn git off until both finish"
+      ],
+      "correct": 2,
+      "reteach": "Worktrees give each parallel session a separate checkout on its own branch, so concurrent edits don't collide.",
+      "hardChoices": [
+        "Run the bug fix in plan mode — read-only sessions can't collide",
+        "Give each session its own branch in the same checkout — git keeps them apart",
+        "Use a subagent for the bug fix — subagents get an isolated checkout"
+      ]
+    },
+    {
+      "concept": "git-workflow",
+      "prompt": "You closed your laptop mid-task yesterday. How do you pick the work back up today without re-explaining everything?",
+      "choices": [
+        "You can't — sessions vanish when closed",
+        "Resume the conversation — Claude Code saves every conversation locally, so you continue where you left off",
+        "Recite yesterday's chat from memory as a new prompt",
+        "Delete the repo and start clean"
+      ],
+      "correct": 1,
+      "reteach": "Conversations are saved locally — resume the most recent one (or pick from a list) instead of re-explaining context.",
+      "hardChoices": [
+        "Ask Claude to reread CLAUDE.md — session history is appended there",
+        "Run /compact — it restores a summary of the previous session",
+        "Sign in and sync — history is stored on Anthropic's servers, not locally"
+      ]
+    }
+  ],
+  "petName": "Troubles",
+  "petGender": "f"
+}
