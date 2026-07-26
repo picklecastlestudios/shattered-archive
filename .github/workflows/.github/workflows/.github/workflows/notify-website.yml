@@ -14,4 +14,9 @@ jobs:
           token: ${{ secrets.WEBSITE_REPO_TOKEN }}
           repository: picklecastlestudios/website
           event-type: game-release
-          client-payload: '{"game": "shattered-archive", "version": "${{ github.event.release.tag_name }}", "body": "${{ github.event.release.body }}"}'
+          client-payload: |-
+            {
+              "game": "shattered-archive",
+              "version": ${{ toJson(github.event.release.tag_name) }},
+              "body": ${{ toJson(github.event.release.body) }}
+            }
