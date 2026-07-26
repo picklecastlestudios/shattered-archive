@@ -1,0 +1,17 @@
+name: Push Release Notes to Website
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Website Update
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.WEBSITE_REPO_TOKEN }}
+          repository: picklecastlestudios/website
+          event-type: game-release
+          client-payload: '{"game": "shattered-archive", "version": "${{ github.event.release.tag_name }}", "body": "${{ github.event.release.body }}"}'
